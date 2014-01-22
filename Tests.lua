@@ -124,3 +124,23 @@ function test_subscribers_do_get_other_zone_events_if_requested()
 	RareShare:Publish(testRare)
 	assert(eventFiredCorrectly)
 end
+
+function test_rare_coordinator_messages_are_parsed_correctly()
+	local broadcastRare = nil
+	RareShare:RegisterSubscriber(
+		function(rare)
+			broadcastRare = rare
+		end
+	)
+
+	RareShareTests:BroadcastChat("RCELVA", "Krackle", "[RCELVA]5.4.1-4_72775_alive50,12-34_56789_")
+	assert(broadcastRare ~= nil)
+	assert(broadcastRare.ID == 72775)
+	assert(broadcastRare.Name == "Bufo")
+	assert(broadcastRare.EventType == "Alive")
+	assert(broadcastRare.Health == 50)
+	assert(broadcastRare.X == 12)
+	assert(broadcastRare.Y == 34)
+	assert(broadcastRare.SourceCharacter == "Krackle")
+	assert(broadcastRare.SourcePublisher == "RareCoordinator")
+end
