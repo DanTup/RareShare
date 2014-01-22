@@ -7,6 +7,8 @@ require "Tests"
 allTests = {}
 for name, value in pairs(_G) do
 	if name:starts("test_") then
+		name = name:sub(6)
+		name =  name:gsub("_", " ")
 		allTests[name] = value
 	end
 end
