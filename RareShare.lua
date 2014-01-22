@@ -49,7 +49,7 @@ end
 
 function RareShare:Publish(rare)
 	if not RareShare:ValidateRare(rare) then
-		if RareShare:IsDebugMode() then print("Invalid rare! "..debug.traceback()) end
+		--if RareShare:IsDebugMode() then print("Invalid rare! "..debug.traceback()) end
 		return
 	end
 	
