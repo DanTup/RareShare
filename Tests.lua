@@ -85,3 +85,28 @@ function test_death_events_are_always_major()
 	assert(numberOfEvents == 2)
 	assert(numberOfMajorEvents == 2)
 end
+
+function test_subscribers_get_current_zone_events_by_default()
+	local eventFiredCorrectly = false
+	RareShare:RegisterSubscriber(
+		function(rare)
+			eventFiredCorrectly = (rare == testRare)
+		end
+	)
+
+	RareShare:Publish(testRare)
+	assert(eventFiredCorrectly)
+end
+
+function test_subscribers_do_not_get_other_zone_events_by_default()
+	RareShareTests:SetZone("Stormwind City")
+	local eventFired = false
+	RareShare:RegisterSubscriber(
+		function(rare)
+			eventFired = true
+		end
+	)
+
+	RareShare:Publish(testRare)
+	assert(not eventFired)
+end
