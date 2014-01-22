@@ -68,3 +68,20 @@ function test_only_first_alive_event_is_considered_major()
 	assert(numberOfEvents == 2)
 	assert(numberOfMajorEvents == 1)
 end
+
+function test_death_events_are_always_major()
+	local numberOfEvents = 0
+	local numberOfMajorEvents = 0
+	RareShare:RegisterSubscriber(
+		function(rare)
+			numberOfEvents = numberOfEvents + 1
+			if rare.MajorEvent then
+				numberOfMajorEvents = numberOfMajorEvents + 1
+			end
+		end
+	)
+	RareShare:Publish(testRareDead)
+	RareShare:Publish(testRareDead)
+	assert(numberOfEvents == 2)
+	assert(numberOfMajorEvents == 2)
+end
