@@ -52,15 +52,19 @@ function test_invalid_rare_is_not_published()
 	assert(not eventFired)
 end
 
-function test_publishers_cannot_set_major_event()
-	local eventFired = false
+function test_only_first_alive_event_is_considered_major()
+	local numberOfEvents = 0
+	local numberOfMajorEvents = 0
 	RareShare:RegisterSubscriber(
 		function(rare)
-			eventFired = true
+			numberOfEvents = numberOfEvents + 1
+			if rare.MajorEvent then
+				numberOfMajorEvents = numberOfMajorEvents + 1
+			end
 		end
 	)
-	local rareWithMajor = clone(testRare)
-	rareWithMajor.MajorEvent = true
-	RareShare:Publish(rareWithMajor)
-	assert(not eventFired)
+	RareShare:Publish(testRare)
+	RareShare:Publish(testRare)
+	assert(numberOfEvents == 2)
+	assert(numberOfMajorEvents == 1)
 end

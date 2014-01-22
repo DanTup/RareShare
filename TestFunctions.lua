@@ -1,6 +1,7 @@
 ﻿RareShareTests = {}
 
 function RareShareTests:ResetEnvironment()
+	RareShare:ResetState()
 end
 
 function assert_eq(x, y, m)
