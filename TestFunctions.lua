@@ -5,11 +5,21 @@ function RareShareTests:ResetEnvironment()
 	currentZone = "Timeless Isle"
 end
 
+currentZone = "Timeless Isle"
 function RareShareTests:SetZone(zone)
 	currentZone = zone
 end
 
-currentZone = "Timeless Isle"
+function RareShareTests:BroadcastChat(channel, sender, message)
+	local channelSubscribers = RareShare:GetChannelSubscribersForTesting()
+	for chan, subs in pairs(channelSubscribers) do
+		if chan == channel then
+			for _, sub in pairs(subs) do
+				sub(sender, message)
+			end
+		end
+	end
+end
 
 
 
@@ -18,6 +28,13 @@ currentZone = "Timeless Isle"
 -- WoW Stubs
 function GetZoneText()
 	return currentZone
+end
+
+function CreateFrame()
+	return {
+		SetScript = function() end,
+		RegisterEvent = function() end,
+	}
 end
 
 
