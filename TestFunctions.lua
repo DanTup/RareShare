@@ -9,7 +9,7 @@ function RareShareTests:SetZone(zone)
 	currentZone = zone
 end
 
-local currentZone = "Timeless Isle"
+currentZone = "Timeless Isle"
 
 
 

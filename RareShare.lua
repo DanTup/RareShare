@@ -15,13 +15,15 @@
 -- }
 
 RareShare = {}
-local subscribers = {}
+local filteredSubscribers = {}
+local unfilteredSubscribers = {}
 local knownrares = {}
 
 -- Used for testing; need to be able to reset everything back to clean so that
 -- each test gets a clean run
 function RareShare:ResetState()
-	subscribers = {}
+	filteredSubscribers = {}
+	unfilteredSubscribers = {}
 	knownrares = {}
 end
 
@@ -43,8 +45,12 @@ function RareShare:ValidateRare(rare)
 	return true
 end
 
-function RareShare:RegisterSubscriber(sub)
-	subscribers[#subscribers + 1] = sub
+function RareShare:RegisterSubscriber(sub, includeOutOfZoneEvents)
+	if includeOutOfZoneEvents then
+		unfilteredSubscribers[#unfilteredSubscribers + 1] = sub
+	else
+		filteredSubscribers[#filteredSubscribers + 1] = sub
+	end
 end
 
 function RareShare:Publish(rare)
@@ -63,7 +69,15 @@ function RareShare:Publish(rare)
 		knownrares[rare.ID] = nil
 	end
 
-	for _, sub in pairs(subscribers) do
+	-- Always notify subscribers that wanted unfiltered events
+	for _, sub in pairs(unfilteredSubscribers) do
 		sub(rare)
+	end
+
+	-- Only notify filtered subscribers if the event is for this zone
+	if rare.Zone == GetZoneText() then
+		for _, sub in pairs(filteredSubscribers) do
+			sub(rare)
+		end
 	end
 end
