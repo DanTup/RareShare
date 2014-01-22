@@ -2,7 +2,28 @@
 
 function RareShareTests:ResetEnvironment()
 	RareShare:ResetState()
+	currentZone = "Timeless Isle"
 end
+
+function RareShareTests:SetZone(zone)
+	currentZone = zone
+end
+
+local currentZone = "Timeless Isle"
+
+
+
+
+
+-- WoW Stubs
+function GetZoneText()
+	return currentZone
+end
+
+
+
+
+-- Helper Functions
 
 function assert_eq(x, y, m)
 	if x == nil and y == nil then return end
