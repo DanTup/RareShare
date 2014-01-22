@@ -4,5 +4,6 @@
 ## Author: DanTup
 Common.lua
 RareShare.lua
-Subscriber.DebugChat.lua
-Publisher.SlashCommand.lua
+Subscriber-DebugChat.lua
+Publisher-SlashCommand.lua
+Publisher-RareCoordinator.lua
