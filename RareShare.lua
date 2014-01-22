@@ -10,6 +10,8 @@
 --	Y			int	required if EventType == "Alive"
 --	SuppressAnnouncements	bool	true if we shouldn't announce this (eg. it came from another RareShare that will have announced it)
 --	MajorEvent		bool	true if this event is major (first sight, death) that should be shown to a user (false/nil for incremental updates, like waypoint names)
+--	SourceCharacter		string	required; name of character this event originated from
+--	SourcePublisher		string	required; publisher that raised this event
 -- }
 
 RareShare = {}
@@ -19,6 +21,8 @@ function RareShare:IsDebugMode() return true end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return false end
+	if rare.SourceCharacter == nil then return false end
+	if rare.SourcePublisher == nil then return false end
 	if rare.ID == nil then return false end
 	if rare.Zone == nil then return false end
 	if rare.EventType ~= "Alive" and rare.EventType ~= "Dead" then return false end

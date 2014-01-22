@@ -6,14 +6,18 @@
 	Health = 90,
 	X = 12,
 	Y = 19,
-	MajorEvent = true
+	MajorEvent = true,
+	SourceCharacter = GetUnitName("player"),
+	SourcePublisher = "SlashCommand"
 }
 
 local testRareDead = {
 	ID = 1,
 	Zone = "Timeless Isle",
 	EventType = "Dead",
-	MajorEvent = true
+	MajorEvent = true,
+	SourceCharacter = GetUnitName("player"),
+	SourcePublisher = "SlashCommand"
 }
 
 local function slashHandler(msg)
