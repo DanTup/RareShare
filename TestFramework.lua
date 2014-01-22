@@ -21,9 +21,9 @@ for name, value in pairs(allTests) do
 	local pass, err = xpcall(value, printStack)
 
 	if pass then
-		print(name, "PASS")
+		print("PASS", name)
 	else
-		print(name, "FAIL")
+		print("FAIL", name)
 		print(err)
 		failcount = failcount + 1
 	end
