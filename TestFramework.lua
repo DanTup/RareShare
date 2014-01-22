@@ -1,6 +1,7 @@
 ﻿require "Common"
 require "RareShare"
 require "TestFunctions"
+require "TestRares"
 require "Tests"
 
 allTests = {}
