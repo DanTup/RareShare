@@ -1,4 +1,9 @@
-﻿function assert_eq(x, y, m)
+﻿RareShareTests = {}
+
+function RareShareTests:ResetEnvironment()
+end
+
+function assert_eq(x, y, m)
 	if x == nil and y == nil then return end
 	if m == nil then m = "" end
 	if x ~= nil and y == nil then
@@ -21,7 +26,10 @@ function assert_tables_eq(t1, t2)
 	end
 end
 
-RareShareTests = {}
-
-function RareShareTests:ResetEnvironment()
+function clone(orig)
+	local copy = {}
+	for k, v in pairs(orig) do
+		copy[k] = v
+	end
+	return copy
 end
