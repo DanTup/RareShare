@@ -25,6 +25,7 @@ function RareShare:ValidateRare(rare)
 	if rare.SourcePublisher == nil then return false end
 	if rare.ID == nil then return false end
 	if rare.Zone == nil then return false end
+	if rare.MajorEvent ~= nil then return false end
 	if rare.EventType ~= "Alive" and rare.EventType ~= "Dead" then return false end
 	if rare.EventType == "Alive" then
 		if rare.Name == nil then return false end

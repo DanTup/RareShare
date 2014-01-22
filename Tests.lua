@@ -51,3 +51,16 @@ function test_invalid_rare_is_not_published()
 	RareShare:Publish(testInvalidRare)
 	assert(not eventFired)
 end
+
+function test_publishers_cannot_set_major_event()
+	local eventFired = false
+	RareShare:RegisterSubscriber(
+		function(rare)
+			eventFired = true
+		end
+	)
+	local rareWithMajor = clone(testRare)
+	rareWithMajor.MajorEvent = true
+	RareShare:Publish(rareWithMajor)
+	assert(not eventFired)
+end
