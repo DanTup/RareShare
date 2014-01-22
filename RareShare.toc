@@ -1,9 +1,7 @@
 ﻿## Interface: 50400
-
 ## Title: RareShare
 ## Notes: Finds and shares Rare information.
 ## Author: DanTup
-
 Common.lua
 RareShare.lua
 Subscriber.DebugChat.lua
