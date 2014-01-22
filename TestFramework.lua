@@ -3,6 +3,7 @@ require "RareShare"
 require "TestFunctions"
 require "TestRares"
 require "Tests"
+require "Publisher-RareCoordinator"
 
 allTests = {}
 for name, value in pairs(_G) do
