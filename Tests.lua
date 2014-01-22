@@ -110,3 +110,17 @@ function test_subscribers_do_not_get_other_zone_events_by_default()
 	RareShare:Publish(testRare)
 	assert(not eventFired)
 end
+
+function test_subscribers_do_get_other_zone_events_if_requested()
+	RareShareTests:SetZone("Stormwind City")
+	local eventFiredCorrectly = false
+	RareShare:RegisterSubscriber(
+		function(rare)
+			eventFiredCorrectly = (rare == testRare)
+		end,
+		true
+	)
+
+	RareShare:Publish(testRare)
+	assert(eventFiredCorrectly)
+end
