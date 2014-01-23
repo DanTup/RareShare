@@ -8,6 +8,7 @@ Subscriber-DebugChat.lua
 Subscriber-RareShareChat.lua
 Subscriber-PlaySound.lua
 Subscriber-ChatAnnounce.lua
+Subscriber-TomTom.lua
 Publisher-RareShareChat.lua
 Publisher-SlashCommand.lua
 Publisher-TargettedMob.lua
