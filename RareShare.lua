@@ -57,7 +57,7 @@ end
 function RareShare:Publish(rare)
 	local validationResults = RareShare:ValidateRare(rare)
 	if validationResults ~= nil then
-		--if RareShare:IsDebugMode() then print("    Invalid rare! "..validationResults) end
+		if RareShare:IsDebugMode() and RareShareTest == nil then print("    Invalid rare! "..validationResults) end
 		return
 	end
 
