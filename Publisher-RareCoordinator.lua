@@ -34,7 +34,6 @@ names[71919] = "Zhu-Gon the Sour"
 
 
 local function handleMessage(sender, rcMessage)
-	print("GOT RC: "..rcMessage)
 	local parts = string.split(rcMessage, "[^_]+")
 	if #parts ~= 4 then
 		if RareShare:IsDebugMode() then
