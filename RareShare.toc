@@ -1,7 +1,8 @@
 ﻿## Interface: 50400
 ## Title: RareShare
-## Notes: Finds and shares Rare information.
+## Notes: RareShare receives and shares information on the locations and current HP of rare mobs both on The Timeless Isle and across the rest of Azeroth and Outland.
 ## Author: DanTup
+## Version: 0.8
 Common.lua
 RareShare.lua
 Subscriber-DebugChat.lua
