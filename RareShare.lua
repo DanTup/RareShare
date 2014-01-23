@@ -97,18 +97,19 @@ function RareShare:SubscribeToChat(chatChannel, handler)
 		end
 	end
 
+	local frame = CreateFrame("MessageFrame", "RareShareRC")
+
 	-- HACK: We need to wait some time for the default channels to be joined, otherwise we push General down from 1, and things go wonky
 	local timeTillJoinChannels = 5.0
 	local function onUpdate(self, elapsed)
-		timeTillJoinChannels = timeTillJoinChannels- elapsed
+		timeTillJoinChannels = timeTillJoinChannels - elapsed
 
 		if timeTillJoinChannels < 0 then
 			JoinTemporaryChannel(chatChannel, nil, frame:GetID())
-			rareShareRCFrame:SetScript("OnUpdate", nil)
+			frame:SetScript("OnUpdate", nil)
 		end
 	end
 
-	local frame = CreateFrame("MessageFrame", "RareShareRC")
 	frame:SetScript("OnEvent", onEvent)
 	frame:SetScript("OnUpdate", onUpdate)
 	frame:RegisterEvent("CHAT_MSG_CHANNEL")
