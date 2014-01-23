@@ -15,7 +15,7 @@ local function UpdateWaypoints(rare)
 
 	if rare.EventType == "Alive" then
 		local waypointName = rare.Name.." ("..rare.Health.."% HP)    [RareShare]"
-		local newPoint = TomTom:AddWaypoint(rare.X, rare.Y, waypointName)
+		local newPoint = TomTom:AddWaypoint(rare.X, rare.Y, waypointName, false)
 		waypoints[rare.ID] = newPoint
 	end
 end
