@@ -17,6 +17,7 @@
 -- }
 
 local isDebugMode = false
+local allowAnnouncingOfExternalEvents = false
 local filteredSubscribers = {}
 local unfilteredSubscribers = {}
 local knownRares = {}
@@ -37,6 +38,9 @@ end
 function RareShare:IsDebugMode() return isDebugMode end
 function RareShare:ToggleDebugMode() isDebugMode = not isDebugMode end
 function RareShare:EnableDebugMode() isDebugMode = true end
+
+function RareShare:AllowAnnouncingOfExternalEvents() return allowAnnouncingOfExternalEvents end
+function RareShare:ToggleAllowAnnouncingOfExternalEvents() allowAnnouncingOfExternalEvents = not allowAnnouncingOfExternalEvents end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end

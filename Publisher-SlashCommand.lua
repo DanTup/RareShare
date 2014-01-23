@@ -56,6 +56,13 @@ local function slashHandler(msg)
 		else
 			print("|cff9999ffRareShare:|r Debug mode disabled")
 		end
+	elseif msg == "announceexternal" then
+		RareShare:ToggleAllowAnnouncingOfExternalEvents()
+		if RareShare:AllowAnnouncingOfExternalEvents() then
+			print("|cff9999ffRareShare:|r External events will now be announced")
+		else
+			print("|cff9999ffRareShare:|r External events will no longer be announced")
+		end
 	elseif msg == "alive" then
 		RareShare:Publish(clone(testRareAlive))
 	elseif msg == "dead" then
@@ -66,11 +73,12 @@ local function slashHandler(msg)
 		RareShare:Publish(clone(testRareDeadOtherZone))
 	else
 		print("|cff9999ffRareShare:|r Allowed commands:")
-		print("|cff9999ffRareShare:|r     /rstest debug        Toggles debug mode")
-		print("|cff9999ffRareShare:|r     /rstest alive        Sends a current-zone alive alert")
-		print("|cff9999ffRareShare:|r     /rstest dead         Sends a current-zone dead alert")
-		print("|cff9999ffRareShare:|r     /rstest alive other  Sends an other-zone alive alert")
-		print("|cff9999ffRareShare:|r     /rstest dead other   Sends an other-zone dead alert")
+		print("|cff9999ffRareShare:|r     /rstest debug            Toggles debug mode")
+		print("|cff9999ffRareShare:|r     /rstest announceexternal Toggles debug mode")
+		print("|cff9999ffRareShare:|r     /rstest alive            Sends a current-zone alive alert")
+		print("|cff9999ffRareShare:|r     /rstest dead             Sends a current-zone dead alert")
+		print("|cff9999ffRareShare:|r     /rstest alive other      Sends an other-zone alive alert")
+		print("|cff9999ffRareShare:|r     /rstest dead other       Sends an other-zone dead alert")
 	end
 end
 

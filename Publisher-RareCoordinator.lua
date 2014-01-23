@@ -73,6 +73,8 @@ local function handleMessage(sender, rcMessage)
 		return -- Unknown event type
 	end
 
+	rare.AllowAnnouncing = RareShare:AllowAnnouncingOfExternalEvents()
+
 	RareShare:Publish(rare)
 end
 
