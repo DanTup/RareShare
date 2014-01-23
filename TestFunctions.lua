@@ -69,11 +69,3 @@ function assert_tables_eq(t1, t2)
 		assert_eq(t1[k], t2[k], k)
 	end
 end
-
-function clone(orig)
-	local copy = {}
-	for k, v in pairs(orig) do
-		copy[k] = v
-	end
-	return copy
-end

@@ -36,3 +36,11 @@ function wordNilToNil(x)
 	if x == "nil" then return nil end
 	return x
 end
+
+function clone(orig)
+	local copy = {}
+	for k, v in pairs(orig) do
+		copy[k] = v
+	end
+	return copy
+end

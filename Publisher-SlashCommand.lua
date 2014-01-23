@@ -57,13 +57,13 @@ local function slashHandler(msg)
 			print("|cff9999ffRareShare:|r Debug mode disabled")
 		end
 	elseif msg == "alive" then
-		RareShare:Publish(testRareAlive)
+		RareShare:Publish(clone(testRareAlive))
 	elseif msg == "dead" then
-		RareShare:Publish(testRareDead)
+		RareShare:Publish(clone(testRareDead))
 	elseif msg == "alive other" then
-		RareShare:Publish(testRareAliveOtherZone)
+		RareShare:Publish(clone(testRareAliveOtherZone))
 	elseif msg == "dead other" then
-		RareShare:Publish(testRareDeadOtherZone)
+		RareShare:Publish(clone(testRareDeadOtherZone))
 	else
 		print("|cff9999ffRareShare:|r Allowed commands:")
 		print("|cff9999ffRareShare:|r     /rstest debug        Toggles debug mode")
