@@ -44,6 +44,7 @@ local function handleMessage(sender, rcMessage)
 
 	local rare = { Zone = "Timeless Isle", SourceCharacter = sender, SourcePublisher = "RareCoordinator" }
 	rare.ID = tonumber(parts[2])
+	rare.Time = tonumber(parts[4])
 	rare.Name = names[rare.ID]
 
 	if rare.Name == nil then

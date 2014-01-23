@@ -8,6 +8,7 @@
 		Name = destName,
 		Zone = GetZoneText(),
 		EventType = "Dead",
+		Time = toint(timeStamp),
 		SourceCharacter = UnitName("player"),
 		SourcePublisher = "RareShareCombatLog"
 	}

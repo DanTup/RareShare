@@ -30,6 +30,10 @@ function GetZoneText()
 	return currentZone
 end
 
+function time()
+	return os.time()
+end
+
 function CreateFrame()
 	return {
 		SetScript = function() end,

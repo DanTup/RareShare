@@ -44,6 +44,10 @@ local function slashHandler(msg)
 	testRareDead.Zone = GetZoneText()
 	testRareAliveOtherZone.Zone = "Fake Zone"
 	testRareDeadOtherZone.Zone = "Fake Zone"
+	testRareAlive.Time = time()
+	testRareDead.Time = time()
+	testRareAliveOtherZone.Time = time()
+	testRareDeadOtherZone.Time = time()
 
 	if msg == "debug" then
 		RareShare:ToggleDebugMode()

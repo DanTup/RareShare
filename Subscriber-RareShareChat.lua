@@ -7,7 +7,7 @@ local function AnnounceInRareShareChat(rare)
 	end
 
 	if rareShareChatChannel ~= nil and rareShareChatChannel > 0 and not rare.SuppressAnnouncements then
-		local message = rare.ID..rareShareSep..nilToWordNil(rare.Name)..rareShareSep..nilToWordNil(rare.Zone)..rareShareSep..rare.EventType..rareShareSep..nilToWordNil(rare.Health)..rareShareSep..nilToWordNil(rare.X)..rareShareSep..nilToWordNil(rare.Y)
+		local message = rare.ID..rareShareSep..nilToWordNil(rare.Name)..rareShareSep..nilToWordNil(rare.Zone)..rareShareSep..rare.EventType..rareShareSep..nilToWordNil(rare.Health)..rareShareSep..nilToWordNil(rare.X)..rareShareSep..nilToWordNil(rare.Y)..rareShareSep..nilToWordNil(rare.Time)
 		SendChatMessage(message, "CHANNEL", nil, rareShareChatChannel)
 	end
 end

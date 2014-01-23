@@ -24,6 +24,7 @@
 		Health = rareHealth,
 		X = rareX,
 		Y = rareY,
+		Time = time(),
 		SourceCharacter = UnitName("player"),
 		SourcePublisher = "RareShareTargettedMob"
 	}
