@@ -25,6 +25,7 @@
 		X = rareX,
 		Y = rareY,
 		Time = time(),
+		AllowAnnouncing = true,
 		SourceCharacter = UnitName("player"),
 		SourcePublisher = "RareShareTargettedMob"
 	}

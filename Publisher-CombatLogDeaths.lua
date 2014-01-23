@@ -9,6 +9,7 @@
 		Zone = GetZoneText(),
 		EventType = "Dead",
 		Time = toint(timeStamp),
+		AllowAnnouncing = true,
 		SourceCharacter = UnitName("player"),
 		SourcePublisher = "RareShareCombatLog"
 	}

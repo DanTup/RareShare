@@ -16,7 +16,6 @@
 		X = toint(wordNilToNil(data[6])),
 		Y = toint(wordNilToNil(data[7])),
 		Time = toint(wordNilToNil(data[8])),
-		SuppressAnnouncements = true, -- Since this came from RareShare; the original sender will have announced it
 		SuppressSharing = true, -- It's already been shared (hence this code running)
 		SourceCharacter = sender,
 		SourcePublisher = "RareShareChat"

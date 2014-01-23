@@ -2,7 +2,7 @@
 	if not RareShare:IsDebugMode() then return end
 
 	local flags = ""
-	if rare.SuppressAnnouncements then flags = flags.." (noannounce)" end
+	if rare.AllowAnnouncing then flags = flags.." (announce)" end
 	if rare.MajorEvent then flags = flags.." (major)" end
 	if rare.EventType == "Alive" then
 		print("|cff9999ffRareShare Debug:|r "..prefix.."|cff999999 ("..rare.SourceCharacter.." @ "..rare.SourcePublisher..") "..rare.ID.." ("..rare.Name..") alive ("..rare.Health.."% HP) at ("..rare.X..","..rare.Y..") in "..rare.Zone.." (time: "..rare.Time..")"..flags)
