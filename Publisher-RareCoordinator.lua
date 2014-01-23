@@ -36,7 +36,12 @@ names[71919] = "Zhu-Gon the Sour"
 local function handleMessage(sender, rcMessage)
 	print("GOT RC: "..rcMessage)
 	local parts = string.split(rcMessage, "[^_]+")
-	if #parts ~= 4 then return end
+	if #parts ~= 4 then
+		if RareShare:IsDebugMode() then
+			print("Unexpected RareCoordinator message: "..rcMessage)
+		end
+		return
+	end
 
 	local rare = { Zone = "Timeless Isle", SourceCharacter = sender, SourcePublisher = "RareCoordinator" }
 	rare.ID = tonumber(parts[2])
