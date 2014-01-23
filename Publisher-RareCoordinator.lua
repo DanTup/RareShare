@@ -43,8 +43,8 @@ local function handleMessage(sender, rcMessage)
 	end
 
 	local rare = { Zone = "Timeless Isle", SourceCharacter = sender, SourcePublisher = "RareCoordinator" }
-	rare.ID = tonumber(parts[2])
-	rare.Time = tonumber(parts[4])
+	rare.ID = toint(parts[2])
+	rare.Time = toint(parts[4])
 	rare.Name = names[rare.ID]
 
 	if rare.Name == nil then
@@ -61,8 +61,8 @@ local function handleMessage(sender, rcMessage)
 		rare.EventType = "Alive"
 		local loc = string.split(rcEventType, "[^,%-]+")
 		if #loc == 3 then
-			rare.X = tonumber(loc[2])
-			rare.Y = tonumber(loc[3])
+			rare.X = toint(loc[2])
+			rare.Y = toint(loc[3])
 		else
 			return -- No location, old version of RC; so just ignore
 		end
