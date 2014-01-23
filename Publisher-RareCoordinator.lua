@@ -1,5 +1,5 @@
 ﻿local function handleMessage(sender, rcMessage)
-	local parts = rcMessage:split("[^_]+")
+	local parts = string.split(rcMessage, "[^_]+")
 	if #parts ~= 4 then return end
 
 	local rare = { Zone = "Timeless Isle", SourceCharacter = sender, SourcePublisher = "RareCoordinator", Name = "FAKENAME-TODO" }
@@ -11,7 +11,7 @@
 	end
 	if rcEventType:starts("alive") then
 		rare.EventType = "Alive"
-		local loc = rcEventType:split("[^,%-]+")
+		local loc = string.split(rcEventType, "[^,%-]+")
 		if #loc == 3 then
 			rare.X = tonumber(loc[2])
 			rare.Y = tonumber(loc[3])
