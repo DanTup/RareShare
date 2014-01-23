@@ -56,7 +56,7 @@ end
 
 -- We want to provide updates even if the rare health is not changing (eg. player chasing Evermaw around)
 -- but we don't want to do this every frame, so just poll every 5 seconds
-local timeTillUpdate = 5.0 -- Seconds to wait before joining channel; if we do this too early, we push General from 1 to 2, etc.
+local timeTillUpdate = 5.0
 function onUpdate(self, elapsed)
 	-- Do absolutely nothing if there's no target
 	if not UnitExists("target") then return end
