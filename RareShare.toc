@@ -5,8 +5,10 @@
 Common.lua
 RareShare.lua
 Subscriber-DebugChat.lua
+Subscriber-RareShareChat.lua
 Subscriber-PlaySound.lua
 Subscriber-ChatAnnounce.lua
+Publisher-RareShareChat.lua
 Publisher-SlashCommand.lua
 Publisher-TargettedMob.lua
 Publisher-CombatLogDeaths.lua
