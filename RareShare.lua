@@ -90,7 +90,10 @@ function RareShare:Publish(rare)
 	-- Only notify filtered subscribers if the event is for this zone
 	if rare.Zone == GetZoneText() then
 		for _, sub in pairs(filteredSubscribers) do
-			sub(rare)
+			local status, err = pcall(function() sub(rare) end)
+			if not status and RareShare:IsDebugMode() then
+				print("    RareShare subscriber error: "..err)
+			end
 		end
 	end
 end
