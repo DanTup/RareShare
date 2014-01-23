@@ -88,6 +88,8 @@ function RareShare:RegisterSubscriber(sub, includeOutOfZoneEvents)
 end
 
 function RareShare:Publish(rare)
+	-- TODO: Some cleaning up of data, eg. force ID to int, etc.
+
 	local validationResults = RareShare:ValidateRare(rare)
 	if validationResults ~= nil then
 		ignoreMessage(rare, "Invalid rare! "..validationResults)

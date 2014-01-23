@@ -17,7 +17,7 @@
 	if rareHealth < 1 then return end
 
 	local rare = {
-		ID = rareID,
+		ID = toint(rareID),
 		Name = rareName,
 		Zone = GetZoneText(),
 		EventType = "Alive",

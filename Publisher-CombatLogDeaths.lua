@@ -4,7 +4,7 @@
 	local rareID = UnitIDFromGuid(destGUID)
 
 	local rare = {
-		ID = rareID,
+		ID = toint(rareID),
 		Name = destName,
 		Zone = GetZoneText(),
 		EventType = "Dead",
