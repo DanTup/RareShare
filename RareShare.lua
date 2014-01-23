@@ -14,11 +14,13 @@
 --	SourcePublisher			string	required; publisher that raised this event
 -- }
 
-RareShare = {}
+local isDebugMode = false
 local filteredSubscribers = {}
 local unfilteredSubscribers = {}
 local knownRares = {}
 local chatSubscribers = {} -- NOTE: This doesn't get reset, as registered handlers are added at runtime; it's all setup stuff
+
+RareShare = {}
 
 -- Used for testing; need to be able to reset everything back to clean so that
 -- each test gets a clean run
@@ -28,7 +30,8 @@ function RareShare:ResetState()
 	knownRares = {}
 end
 
-function RareShare:IsDebugMode() return true end
+function RareShare:IsDebugMode() return isDebugMode end
+function RareShare:ToggleDebugMode() isDebugMode = not isDebugMode end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end

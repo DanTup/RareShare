@@ -45,7 +45,14 @@ local function slashHandler(msg)
 	testRareAliveOtherZone.Zone = "Fake Zone"
 	testRareDeadOtherZone.Zone = "Fake Zone"
 
-	if msg == "alive" then
+	if msg == "debug" then
+		RareShare:ToggleDebugMode()
+		if RareShare:IsDebugMode() then
+			print("|cff9999ffRareShare:|r Debug mode enabled")
+		else
+			print("|cff9999ffRareShare:|r Debug mode disabled")
+		end
+	elseif msg == "alive" then
 		RareShare:Publish(testRareAlive)
 	elseif msg == "dead" then
 		RareShare:Publish(testRareDead)
@@ -54,11 +61,12 @@ local function slashHandler(msg)
 	elseif msg == "dead other" then
 		RareShare:Publish(testRareDeadOtherZone)
 	else
-		print("Allowed commands:")
-		print("    /rstest alive        Sends a current-zone alive alert")
-		print("    /rstest dead         Sends a current-zone dead alert")
-		print("    /rstest alive other  Sends an other-zone alive alert")
-		print("    /rstest dead other   Sends an other-zone dead alert")
+		print("|cff9999ffRareShare:|rAllowed commands:")
+		print("|cff9999ffRareShare:|r    /rstest debug        Toggles debug mode")
+		print("|cff9999ffRareShare:|r    /rstest alive        Sends a current-zone alive alert")
+		print("|cff9999ffRareShare:|r    /rstest dead         Sends a current-zone dead alert")
+		print("|cff9999ffRareShare:|r    /rstest alive other  Sends an other-zone alive alert")
+		print("|cff9999ffRareShare:|r    /rstest dead other   Sends an other-zone dead alert")
 	end
 end
 
