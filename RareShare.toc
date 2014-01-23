@@ -6,5 +6,6 @@ Common.lua
 RareShare.lua
 Subscriber-DebugChat.lua
 Subscriber-PlaySound.lua
+Subscriber-ChatAnnounce.lua
 Publisher-SlashCommand.lua
 Publisher-RareCoordinator.lua
