@@ -41,6 +41,7 @@ function RareShare:EnableDebugMode() isDebugMode = true end
 
 function RareShare:AllowAnnouncingOfExternalEvents() return allowAnnouncingOfExternalEvents end
 function RareShare:ToggleAllowAnnouncingOfExternalEvents() allowAnnouncingOfExternalEvents = not allowAnnouncingOfExternalEvents end
+function RareShare:EnableAnnouncingOfExternalEvents() allowAnnouncingOfExternalEvents = true end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end
@@ -236,3 +237,8 @@ end
 
 local frame = CreateFrame("MessageFrame", "RareShareTimer")
 frame:SetScript("OnUpdate", onUpdate)
+
+-- HACK: If author, enable boadcasting external events
+if UnitName("player") == "Shoomoo" then
+	RareShare:EnableAnnouncingOfExternalEvents()
+end
