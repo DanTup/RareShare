@@ -74,13 +74,17 @@ function test_death_events_are_always_major()
 	local numberOfMajorEvents = 0
 	RareShare:RegisterSubscriber(
 		function(rare)
-			numberOfEvents = numberOfEvents + 1
-			if rare.MajorEvent then
-				numberOfMajorEvents = numberOfMajorEvents + 1
+			if rare.EventType == "Dead" then
+				numberOfEvents = numberOfEvents + 1
+				if rare.MajorEvent then
+					numberOfMajorEvents = numberOfMajorEvents + 1
+				end
 			end
 		end
 	)
+	RareShare:Publish(testRare)
 	RareShare:Publish(testRareDead)
+	RareShare:Publish(testRare)
 	RareShare:Publish(testRareDead)
 	assert(numberOfEvents == 2)
 	assert(numberOfMajorEvents == 2)
