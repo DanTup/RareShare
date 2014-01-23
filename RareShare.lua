@@ -111,7 +111,7 @@ function RareShare:SubscribeToChat(chatChannel, handler)
 		end
 	end
 
-	local frame = CreateFrame("MessageFrame", "RareShareRC")
+	local frame = CreateFrame("MessageFrame", "RareShare"..chatChannel)
 
 	-- HACK: We need to wait some time for the default channels to be joined, otherwise we push General down from 1, and things go wonky
 	local timeTillJoinChannels = 5.0
