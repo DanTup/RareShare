@@ -1,7 +1,6 @@
 ﻿local testRareAlive = {
 	ID = 1,
 	Name = "Danny Mob",
-	Zone = GetZoneText(),
 	EventType = "Alive",
 	Health = 90,
 	X = 12,
@@ -14,7 +13,6 @@
 local testRareAliveOtherZone = {
 	ID = 1,
 	Name = "Danny Mob",
-	Zone = "Fake Zone",
 	EventType = "Alive",
 	Health = 90,
 	X = 12,
@@ -26,7 +24,6 @@ local testRareAliveOtherZone = {
 
 local testRareDead = {
 	ID = 1,
-	Zone = GetZoneText(),
 	EventType = "Dead",
 	MajorEvent = true,
 	SourceCharacter = GetUnitName("player"),
@@ -35,7 +32,6 @@ local testRareDead = {
 
 local testRareDeadOtherZone = {
 	ID = 1,
-	Zone = "Fake Zone",
 	EventType = "Dead",
 	MajorEvent = true,
 	SourceCharacter = GetUnitName("player"),
@@ -43,6 +39,12 @@ local testRareDeadOtherZone = {
 }
 
 local function slashHandler(msg)
+	-- Update the zone; we can't set this at load, because we may change zone and then send test broadcasts
+	testRareAlive.Zone = GetZoneText()
+	testRareDead.Zone = GetZoneText()
+	testRareAliveOtherZone.Zone = "Fake Zone"
+	testRareDeadOtherZone.Zone = "Fake Zone"
+
 	if msg == "alive" then
 		RareShare:Publish(testRareAlive)
 	elseif msg == "dead" then
