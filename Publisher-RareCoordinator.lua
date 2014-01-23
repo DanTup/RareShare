@@ -56,17 +56,20 @@ local function handleMessage(sender, rcMessage)
 	local rcEventType = parts[3]
 	if rcEventType == "dead" then
 		rare.EventType = "Dead"
-	end
-	if rcEventType:starts("alive") then
+	elseif rcEventType:starts("alive") then
 		rare.EventType = "Alive"
 		local loc = string.split(rcEventType, "[^,%-]+")
 		if #loc == 3 then
 			rare.X = tonumber(loc[2])
 			rare.Y = tonumber(loc[3])
+		else
+			return -- No location, old version of RC; so just ignore
 		end
 		
 		rare.Health = tonumber(string.sub(loc[1], 6))
 		-- TODO: Set health priority (this goes down only in 10s)
+	else
+		return -- Unknown event type
 	end
 
 	RareShare:Publish(rare)
