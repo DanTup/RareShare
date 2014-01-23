@@ -63,8 +63,13 @@ function test_only_first_alive_event_is_considered_major()
 			end
 		end
 	)
-	RareShare:Publish(testRare)
-	RareShare:Publish(testRare)
+	local message1 = clone(testRare)
+	local message2 = clone(testRare)
+	message2.Health = message2.Health - 1
+
+	RareShare:Publish(message1)
+	RareShare:Publish(message2)
+
 	assert(numberOfEvents == 2)
 	assert(numberOfMajorEvents == 1)
 end
@@ -173,4 +178,72 @@ function test_out_of_date_messages_get_ignored()
 
 	-- Ensure we only got the three messages in the correct order, despite the transmission of old mssages
 	assert_tables_eq(receivedMessageTimes, { 10, 20, 30 })
+end
+
+function test_identical_messages_are_ignored_unless_at_least_some_seconds_have_passed()
+	local message1 = clone(testRare)
+	local message2 = clone(testRare) -- 2 seconds later
+	local message3 = clone(testRare) -- 20 seconds later
+
+	message1.Time = 10
+	message2.Time = 12
+	message3.Time = 30
+	
+	local receivedMessages = {}
+	RareShare:RegisterSubscriber(
+		function(rare)
+			receivedMessages[#receivedMessages + 1] = rare
+		end
+	)
+
+	RareShare:Publish(message1)
+	RareShare:Publish(message2)
+	RareShare:Publish(message3)
+
+	-- Ensure we only got the first and last messages, in order
+	assert_tables_eq(receivedMessages, { message1, message3 })
+end
+
+function test_updated_health_messages_are_broadcast_even_if_some_seconds_have_not_passed()
+	local message1 = clone(testRare)
+	local message2 = clone(testRare) -- 2 seconds later
+
+	message1.Time = 10
+	message2.Time = 12
+	message2.Health = message2.Health - 1
+	
+	local receivedMessages = {}
+	RareShare:RegisterSubscriber(
+		function(rare)
+			receivedMessages[#receivedMessages + 1] = rare
+		end
+	)
+
+	RareShare:Publish(message1)
+	RareShare:Publish(message2)
+
+	-- Ensure we got both messages
+	assert_tables_eq(receivedMessages, { message1, message2 })
+end
+
+function test_updated_location_messages_are_broadcast_even_if_some_seconds_have_not_passed()
+	local message1 = clone(testRare)
+	local message2 = clone(testRare) -- 2 seconds later
+
+	message1.Time = 10
+	message2.Time = 12
+	message2.X = message2.X + 10
+	
+	local receivedMessages = {}
+	RareShare:RegisterSubscriber(
+		function(rare)
+			receivedMessages[#receivedMessages + 1] = rare
+		end
+	)
+
+	RareShare:Publish(message1)
+	RareShare:Publish(message2)
+
+	-- Ensure we got both message
+	assert_tables_eq(receivedMessages, { message1, message2 })
 end

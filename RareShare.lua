@@ -72,9 +72,20 @@ function RareShare:Publish(rare)
 	-- Check that this message isn't older than one we already parsed
 	-- We're allowing messages with the *same* time, simply because lua time() is to the second, and it's better to dupe than miss events
 	if latestRareMessages[rare.ID] and latestRareMessages[rare.ID] > rare.Time then
-		if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring out-of-date message "..latestRareMessages[rare.ID].." vs "..rare.Time) end
+		if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring out-of-date message") end
 		return
 	end
+
+	-- Don't re-broadcast events unless something has changed (X, Y, Zone, Health unless last event was more than x seconds ago)
+	if knownRares[rare.ID] then
+		local known = knownRares[rare.ID]
+		if known.X == rare.X and known.Y == rare.Y and known.Health == rare.Health and rare.Time < known.Time + 5 then
+			if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring similar message") end
+			return
+		end
+	end
+
+	-- Remember the time of the last event
 	latestRareMessages[rare.ID] = rare.Time
 
 	-- Ignore any non-Alive events if we weren't tracking the rare
