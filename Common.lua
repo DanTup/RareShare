@@ -25,3 +25,14 @@ end
 function UnitIDFromGuid(unitGuid)
 	return tonumber((unitGuid):sub(-12, -9), 16)
 end
+
+-- HACK!!!! Our terrible string.split doesn't handle empty strings, so this is a big hack to get stuff working
+function nilToWordNil(x)
+	if x == nil then return "nil" end
+	return x
+end
+
+function wordNilToNil(x)
+	if x == "nil" then return nil end
+	return x
+end
