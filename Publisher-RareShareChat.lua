@@ -1,4 +1,7 @@
 ﻿local function handleMessage(sender, message)
+	-- Ignore any messages sent by self
+	if sender == UnitName("player") then return end
+
 	local data = string.split(message, "[^~]+")
 
 	-- If we don't have at least the information we expect, bail
