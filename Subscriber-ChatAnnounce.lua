@@ -1,5 +1,5 @@
 ﻿local function AnnounceInChat(rare)
-	if rare.MajorEvent then
+	if rare.MajorEvent and not rare.SuppressAnnouncements then
 		if rare.EventType == "Alive" then
 			SendChatMessage("[RareShare] "..rare.Name.." spotted around "..rare.X..","..rare.Y.." with "..rare.Health.." HP!", "GUILD")
 		elseif rare.EventType == "Dead" then
