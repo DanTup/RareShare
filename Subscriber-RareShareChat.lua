@@ -1,7 +1,7 @@
 ﻿local rareShareChatChannel = -1
 local rareShareSep = "~"
 
-local function AnnounceInRareShareChat(rare)
+local function ShareViaChat(rare)
 	-- Only share Alive and Dead events (eg. no Decays)
 	if rare.EventType ~= "Alive" and rare.EventType ~= "Dead" then return end
 
@@ -15,4 +15,4 @@ local function AnnounceInRareShareChat(rare)
 	end
 end
 
-RareShare:RegisterSubscriber(AnnounceInRareShareChat)
+RareShare:RegisterSubscriber(ShareViaChat)
