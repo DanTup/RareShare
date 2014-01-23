@@ -2,6 +2,9 @@
 local rareShareSep = "~"
 
 local function AnnounceInRareShareChat(rare)
+	-- Only share Alive and Dead events (eg. no Decays)
+	if rare.EventType ~= "Alive" and rare.EventType ~= "Dead" then return end
+
 	if rareShareChatChannel == -1 then
 		rareShareChatChannel, _, _ = GetChannelName("DANTUPRARESHARE")
 	end
