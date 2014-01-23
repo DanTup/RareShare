@@ -42,11 +42,11 @@ function RareShare:ValidateRare(rare)
 	if rare.SourceCharacter == nil then return "SourceCharacter" end
 	if rare.SourcePublisher == nil then return "SourcePublisher" end
 	if rare.ID == nil then return "ID" end
-	if rare.Zone == nil then return "Zone" end
 	if rare.Time == nil then return "Time" end
-	if rare.EventType ~= "Alive" and rare.EventType ~= "Dead" then return "EventType" end
+	if rare.EventType ~= "Alive" and rare.EventType ~= "Dead" and rare.EventType ~= "Decay" then return "EventType" end
 	if rare.EventType == "Alive" then
 		if rare.Name == nil then return "Name" end
+		if rare.Zone == nil then return "Zone" end
 		if rare.Health == nil then return "Health" end
 		if rare.X == nil then return "X" end
 		if rare.Y == nil then return "Y" end
@@ -93,7 +93,7 @@ function RareShare:Publish(rare)
 	-- Don't re-broadcast events unless something has changed (X, Y, Zone, Health unless last event was more than x seconds ago)
 	if knownRares[rare.ID] then
 		local known = knownRares[rare.ID]
-		if known.X == rare.X and known.Y == rare.Y and known.Health == rare.Health and rare.Time < known.Time + 5 then
+		if known.EventType == rare.EventType and known.X == rare.X and known.Y == rare.Y and known.Health == rare.Health and rare.Time < known.Time + 5 then
 			if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring similar message") end
 			return
 		end
@@ -177,3 +177,35 @@ end
 function RareShare:GetChannelSubscribersForTesting()
 	return chatSubscribers
 end
+
+local function decayRares()
+	local now = time()
+	for _, rare in pairs(knownRares) do
+		if rare.Time < now - 300 then ' Decay if last event was more than 5 mins ago (5 * 60 = 300 seconds)
+			local decayMessage = {
+				ID = rare.ID,
+				EventType = "Decay",
+				Time = time(),
+				SourceCharacter = UnitName("player"),
+				SourcePublisher = "RareShareDecay"
+			}
+
+			RareShare:Publish(decayMessage)
+		end
+	end
+end
+
+-- We want to periodically process old rares and "Decay" them (notify subscribers they're out-of-date, without marking them dead)
+local timeTillDecay = 5.0
+function onUpdate(self, elapsed)
+	timeTillDecay = timeTillDecay - elapsed
+
+	if timeTillDecay < 0 then
+		timeTillDecay = 5.0
+
+		decayRares()
+	end
+end
+
+local frame = CreateFrame("MessageFrame", "RareShareTimer")
+frame:SetScript("OnUpdate", onUpdate)
