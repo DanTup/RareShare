@@ -76,6 +76,20 @@ function RareShare:Publish(rare)
 		return
 	end
 
+	-- Ignore unreliable health estimates that say 0 (RareCoordinator sends 0 when < 10%)
+	if rare.HealthPriority and rare.HealthPriority > 1 and rare.Health == 0 then
+		if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring bad health message") end
+		return
+	end
+
+	-- Ignore unreliable health estimates if they're within the threshold (eg. don't overwrite a RareShare 25% with a RareCoorindator 20%, but do overwrite it with a RareCoorindator 10%)
+	if rare.HealthPriority and rare.HealthPriority > 1 and knownRares[rare.ID] then
+		if knownRares[rare.ID].Health - rare.Health <= rare.HealthPriority then
+			if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring bad health message") end
+			return
+		end
+	end
+
 	-- Don't re-broadcast events unless something has changed (X, Y, Zone, Health unless last event was more than x seconds ago)
 	if knownRares[rare.ID] then
 		local known = knownRares[rare.ID]

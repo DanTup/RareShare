@@ -247,3 +247,33 @@ function test_updated_location_messages_are_broadcast_even_if_some_seconds_have_
 	-- Ensure we got both message
 	assert_tables_eq(receivedMessages, { message1, message2 })
 end
+
+function test_dont_update_health_with_unreliable_values()
+	local message1 = clone(testRare) -- 95% reliable
+	local message2 = clone(testRare) -- 90% unreliable, ignored because too close
+	local message3 = clone(testRare) -- 93% reliable
+	local message4 = clone(testRare) -- 80% unreliable, used because it's more than 10 off (HealthPriority)
+
+	message1.Health = 95
+	message2.Health = 90
+	message2.HealthPriority = 10
+	message3.Health = 93
+	message4.Health = 80
+	message4.HealthPriority = 10
+	
+	
+	local receivedMessageHealths = {}
+	RareShare:RegisterSubscriber(
+		function(rare)
+			receivedMessageHealths[#receivedMessageHealths + 1] = rare.Health
+		end
+	)
+
+	RareShare:Publish(message1)
+	RareShare:Publish(message2)
+	RareShare:Publish(message3)
+	RareShare:Publish(message4)
+
+	-- Ensure we got both message
+	assert_tables_eq(receivedMessageHealths, { 95, 93, 80 }) -- Message 2 is ignored due to being too close to first, once health is updated
+end

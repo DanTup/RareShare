@@ -68,7 +68,7 @@ local function handleMessage(sender, rcMessage)
 		end
 		
 		rare.Health = tonumber(string.sub(loc[1], 6))
-		-- TODO: Set health priority (this goes down only in 10s)
+		rare.HealthPriority = 10
 	else
 		return -- Unknown event type
 	end
