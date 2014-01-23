@@ -54,6 +54,25 @@ function RareShare:ValidateRare(rare)
 	return nil
 end
 
+local function log(message)
+	if RareShare:IsDebugMode() and RareShareTests == nil then
+		print("|cff9999ffRareShare Debug:|r "..message)
+	end
+end
+
+local function ignoreMessage(rare, reason)
+	local message = rare.ID..", "
+	if rare.Name then message = message..rare.Name..", " end
+	if rare.EventType then message = message..rare.EventType..", " end
+	if rare.Health then message = message..rare.Health..", " end
+	if rare.X then message = message..rare.X..", " end
+	if rare.Y then message = message..rare.Y..", " end
+	if rare.SourceCharacter then message = message..rare.SourceCharacter..", " end
+	if rare.SourcePublisher then message = message..rare.SourcePublisher..", " end
+
+	log("Ignoring message: "..reason..": "..message)
+end
+
 function RareShare:RegisterSubscriber(sub, includeOutOfZoneEvents)
 	if includeOutOfZoneEvents then
 		unfilteredSubscribers[#unfilteredSubscribers + 1] = sub
@@ -65,28 +84,31 @@ end
 function RareShare:Publish(rare)
 	local validationResults = RareShare:ValidateRare(rare)
 	if validationResults ~= nil then
-		if RareShare:IsDebugMode() and RareShareTests == nil then print("    Invalid rare! "..validationResults) end
+		ignoreMessage(rare, "Invalid rare! "..validationResults)
 		return
 	end
 
 	-- Check that this message isn't older than one we already parsed
 	-- We're allowing messages with the *same* time, simply because lua time() is to the second, and it's better to dupe than miss events
 	if latestRareMessages[rare.ID] and latestRareMessages[rare.ID] > rare.Time then
-		if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring out-of-date message") end
+		ignoreMessage(rare, "Out of date")
 		return
 	end
 
 	-- Ignore unreliable health estimates that say 0 (RareCoordinator sends 0 when < 10%)
 	if rare.HealthPriority and rare.HealthPriority > 1 and rare.Health == 0 then
-		if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring bad health message") end
+		ignoreMessage(rare, "Bad health message (0)")
 		return
 	end
 
 	-- Ignore unreliable health estimates if they're within the threshold (eg. don't overwrite a RareShare 25% with a RareCoorindator 20%, but do overwrite it with a RareCoorindator 10%)
 	if rare.HealthPriority and rare.HealthPriority > 1 and knownRares[rare.ID] then
-		if knownRares[rare.ID].Health - rare.Health <= rare.HealthPriority then
-			if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring bad health message") end
-			return
+		-- If health priority is worse than previous
+		if not knownRares[rare.ID].HealthPiority or knownRares[rare.ID].HealthPiority < rare.HealthPriority then
+			if knownRares[rare.ID].Health - rare.Health < rare.HealthPriority then
+				ignoreMessage(rare, "Bad health message")
+				return
+			end
 		end
 	end
 
@@ -94,7 +116,7 @@ function RareShare:Publish(rare)
 	if knownRares[rare.ID] then
 		local known = knownRares[rare.ID]
 		if known.EventType == rare.EventType and known.X == rare.X and known.Y == rare.Y and known.Health == rare.Health and rare.Time < known.Time + 5 then
-			if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring similar message") end
+			ignoreMessage(rare, "Repeat message: "..rare.Time.." vs "..known.Time)
 			return
 		end
 	end
@@ -133,7 +155,7 @@ function RareShare:Publish(rare)
 		for _, sub in pairs(filteredSubscribers) do
 			local status, err = pcall(function() sub(rare) end)
 			if not status and RareShare:IsDebugMode() then
-				print("    RareShare subscriber error: "..err)
+				log("Subscriber error: "..err)
 			end
 		end
 	end
@@ -181,7 +203,7 @@ end
 local function decayRares()
 	local now = time()
 	for _, rare in pairs(knownRares) do
-		if rare.Time < now - 300 then ' Decay if last event was more than 5 mins ago (5 * 60 = 300 seconds)
+		if rare.Time < now - 300 then -- Decay if last event was more than 5 mins ago (5 * 60 = 300 seconds)
 			local decayMessage = {
 				ID = rare.ID,
 				EventType = "Decay",
