@@ -1,17 +1,17 @@
 ﻿-- Rare data format:
 -- Table:
 -- {
--- 	ID			int	required
--- 	Name			string	required if EventType == "Alive"; but automatically provided to Subscribers for Dead events
---	Zone			string	required if EventType == "Alive"; but automatically provided to Subscribers for Dead events
---	EventType		string	"Alive", "Dead" or "Decay" (Decay = fired when an Alive mob has not been seen for some time; but can only be raised internally)
--- 	Health 			int	required if EventType == "Alive"
---	X			int	required if EventType == "Alive"
---	Y			int	required if EventType == "Alive"
+-- 	ID						int		required
+-- 	Name					string	required if EventType == "Alive"; but automatically provided to Subscribers for Dead events
+--	Zone					string	required if EventType == "Alive"; but automatically provided to Subscribers for Dead events
+--	EventType				string	"Alive", "Dead" or "Decay" (Decay = fired when an Alive mob has not been seen for some time; but can only be raised internally)
+-- 	Health 					int		required if EventType == "Alive"
+--	X						int		required if EventType == "Alive"
+--	Y						int		required if EventType == "Alive"
 --	SuppressAnnouncements	bool	true if we shouldn't announce this (eg. it came from another RareShare that will have announced it)
---	MajorEvent		bool	true if this event is major (first sight, death) that should be shown to a user (false/nil for incremental updates, like waypoint names)
---	SourceCharacter		string	required; name of character this event originated from
---	SourcePublisher		string	required; publisher that raised this event
+--	MajorEvent				bool	true if this event is major (first sight, death) that should be shown to a user (false/nil for incremental updates, like waypoint names)
+--	SourceCharacter			string	required; name of character this event originated from
+--	SourcePublisher			string	required; publisher that raised this event
 -- }
 
 RareShare = {}
