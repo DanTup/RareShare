@@ -8,4 +8,5 @@ Subscriber-DebugChat.lua
 Subscriber-PlaySound.lua
 Subscriber-ChatAnnounce.lua
 Publisher-SlashCommand.lua
+Publisher-TargettedMob.lua
 Publisher-RareCoordinator.lua
