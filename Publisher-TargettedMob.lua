@@ -25,7 +25,7 @@
 		X = rareX,
 		Y = rareY,
 		SourceCharacter = UnitName("player"),
-		SourcePublisher = "RareShare"
+		SourcePublisher = "RareShareTargettedMob"
 	}
 
 	RareShare:Publish(rare)
