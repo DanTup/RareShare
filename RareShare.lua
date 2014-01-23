@@ -19,6 +19,7 @@ local isDebugMode = false
 local filteredSubscribers = {}
 local unfilteredSubscribers = {}
 local knownRares = {}
+local latestRareMessages = {}
 local chatSubscribers = {} -- NOTE: This doesn't get reset, as registered handlers are added at runtime; it's all setup stuff
 
 RareShare = {}
@@ -29,10 +30,12 @@ function RareShare:ResetState()
 	filteredSubscribers = {}
 	unfilteredSubscribers = {}
 	knownRares = {}
+	latestRareMessages = {}
 end
 
 function RareShare:IsDebugMode() return isDebugMode end
 function RareShare:ToggleDebugMode() isDebugMode = not isDebugMode end
+function RareShare:EnableDebugMode() isDebugMode = true end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end
@@ -62,9 +65,17 @@ end
 function RareShare:Publish(rare)
 	local validationResults = RareShare:ValidateRare(rare)
 	if validationResults ~= nil then
-		if RareShare:IsDebugMode() and RareShareTest == nil then print("    Invalid rare! "..validationResults) end
+		if RareShare:IsDebugMode() and RareShareTests == nil then print("    Invalid rare! "..validationResults) end
 		return
 	end
+
+	-- Check that this message isn't older than one we already parsed
+	-- We're allowing messages with the *same* time, simply because lua time() is to the second, and it's better to dupe than miss events
+	if latestRareMessages[rare.ID] and latestRareMessages[rare.ID] > rare.Time then
+		if RareShare:IsDebugMode() and RareShareTests == nil then print("    Ignoring out-of-date message "..latestRareMessages[rare.ID].." vs "..rare.Time) end
+		return
+	end
+	latestRareMessages[rare.ID] = rare.Time
 
 	-- Ignore any non-Alive events if we weren't tracking the rare
 	if rare.EventType ~= "Alive" and not knownRares[rare.ID] then

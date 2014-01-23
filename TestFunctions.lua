@@ -2,6 +2,7 @@
 
 function RareShareTests:ResetEnvironment()
 	RareShare:ResetState()
+	RareShare:EnableDebugMode()
 	currentZone = "Timeless Isle"
 end
 

@@ -148,3 +148,29 @@ function test_rare_coordinator_messages_are_parsed_correctly()
 	assert(broadcastRare.SourceCharacter == "Krackle")
 	assert(broadcastRare.SourcePublisher == "RareCoordinator")
 end
+
+function test_out_of_date_messages_get_ignored()
+	local message1 = clone(testRare) -- 100%
+	local message2 = clone(testRare) -- 50%
+	local message3 = clone(testRareDead) -- Dead
+
+	message1.Time = 10
+	message2.Time = 20
+	message3.Time = 30
+	
+	local receivedMessageTimes = {}
+	RareShare:RegisterSubscriber(
+		function(rare)
+			receivedMessageTimes[#receivedMessageTimes + 1] = rare.Time
+		end
+	)
+
+	RareShare:Publish(message1)
+	RareShare:Publish(message2)
+	RareShare:Publish(message1) -- Re-broadcast of old message, should be ignored
+	RareShare:Publish(message3)
+	RareShare:Publish(message2) -- Re-broadcast of old alive message, when mob is now dead!
+
+	-- Ensure we only got the three messages in the correct order, despite the transmission of old mssages
+	assert_tables_eq(receivedMessageTimes, { 10, 20, 30 })
+end
