@@ -12,3 +12,16 @@ function string:split(pattern)
 	parts.__index = nil
 	return parts
 end
+
+function toint(x)
+	if x == nil then return nil end
+	return math.floor(tonumber(x) + .5)
+end
+
+function UnitID(unit)
+	return UnitIDFromGuid(UnitGUID(unit))
+end
+
+function UnitIDFromGuid(unitGuid)
+	return tonumber((unitGuid):sub(-12, -9), 16)
+end
