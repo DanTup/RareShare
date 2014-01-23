@@ -46,7 +46,7 @@ end
 
 function onEvent(self, event, ...)
 	if event == "PLAYER_TARGET_CHANGED" then
-		handleTarget(...)
+		handleTarget()
 	end
 
 	if event == "UNIT_HEALTH" then
@@ -54,7 +54,25 @@ function onEvent(self, event, ...)
 	end
 end
 
+-- We want to provide updates even if the rare health is not changing (eg. player chasing Evermaw around)
+-- but we don't want to do this every frame, so just poll every 5 seconds
+local timeTillUpdate = 5.0 -- Seconds to wait before joining channel; if we do this too early, we push General from 1 to 2, etc.
+function onUpdate(self, elapsed)
+	-- Do absolutely nothing if there's no target
+	if not UnitExists("target") then return end
+
+	-- Count down till next required update
+	timeTillUpdate = timeTillUpdate - elapsed
+
+	if timeTillUpdate < 0 then
+		timeTillUpdate = 5.0
+
+		handleTarget()
+	end
+end
+
 local frame = CreateFrame("MessageFrame", "RareShareTargettedMob")
 frame:SetScript("OnEvent", onEvent)
+frame:SetScript("OnUpdate", onUpdate)
 frame:RegisterEvent("PLAYER_TARGET_CHANGED")
 frame:RegisterEvent("UNIT_HEALTH")
