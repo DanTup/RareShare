@@ -8,6 +8,8 @@
 		print("|cff9999ffRareShare Debug:|r "..prefix.."|cff999999 ("..rare.SourceCharacter.." @ "..rare.SourcePublisher..") "..rare.ID.." ("..rare.Name..") alive ("..rare.Health.."% HP) at ("..rare.X..","..rare.Y..") in "..rare.Zone.." (time: "..rare.Time..")"..flags)
 	elseif rare.EventType == "Dead" then
 		print("|cff9999ffRareShare Debug:|r "..prefix.."|cff999999 ("..rare.SourceCharacter.." @ "..rare.SourcePublisher..") "..rare.ID.." dead in "..rare.Zone.." (time: "..rare.Time..")"..flags)
+	elseif rare.EventType == "Decay" then
+		print("|cff9999ffRareShare Debug:|r "..prefix.."|cff999999 ("..rare.SourceCharacter.." @ "..rare.SourcePublisher..") "..rare.ID.." decayed "..rare.Zone.." (time: "..rare.Time..")"..flags)
 	end
 end
 
