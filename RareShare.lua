@@ -2,8 +2,8 @@
 -- Table:
 -- {
 -- 	ID			int	required
--- 	Name			string	required if EventType == "Alive"
---	Zone			string	required
+-- 	Name			string	required if EventType == "Alive"; but automatically provided to Subscribers for Dead events
+--	Zone			string	required if EventType == "Alive"; but automatically provided to Subscribers for Dead events
 --	EventType		string	"Alive", "Dead" or "Decay" (Decay = fired when an Alive mob has not been seen for some time; but can only be raised internally)
 -- 	Health 			int	required if EventType == "Alive"
 --	X			int	required if EventType == "Alive"
@@ -60,9 +60,20 @@ function RareShare:Publish(rare)
 		--if RareShare:IsDebugMode() then print("    Invalid rare! "..validationResults) end
 		return
 	end
+
+	-- Ignore any non-Alive events if we weren't tracking the rare
+	if rare.EventType ~= "Alive" and not knownRares[rare.ID] then
+		return
+	end
 	
 	-- Set as Major event if it's a death, or alive but we didn't already have it
 	rare.MajorEvent = (rare.EventType == "Dead" or (rare.EventType == "Alive" and not knownRares[rare.ID]))
+
+	-- Death events don't always have all data; but we can get them from the previous Alive event
+	if knownRares[rare.ID] then
+		if rare.Name == nil then rare.Name = knownRares[rare.ID].Name end
+		if rare.Zone == nil then rare.Zone = knownRares[rare.ID].Zone end
+	end
 
 	-- Keep track of the rare if it's alive, otherwise remove it from our tracking list
 	if rare.EventType == "Alive" then
