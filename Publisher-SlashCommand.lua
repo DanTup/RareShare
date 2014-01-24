@@ -49,7 +49,13 @@ local function slashHandler(msg)
 	testRareAliveOtherZone.Time = time()
 	testRareDeadOtherZone.Time = time()
 
-	if msg == "debug" then
+	if msg == "dump" then
+		local knownRares = RareShare:GetKnownRaresForTesting()
+		print("|cff9999ffRareShare:|r Known rares:")
+		for _, rare in pairs(knownRares) do
+			print("|cff9999ffRareShare:|r     "..rare.ID..", "..rare.Name.." "..rare.X..","..rare.Y.." ("..rare.Health.."%) @ "..rare.Time)
+		end
+	elseif msg == "debug" then
 		RareShare:ToggleDebugMode()
 		if RareShare:IsDebugMode() then
 			print("|cff9999ffRareShare:|r Debug mode enabled")
@@ -73,6 +79,7 @@ local function slashHandler(msg)
 		RareShare:Publish(clone(testRareDeadOtherZone))
 	else
 		print("|cff9999ffRareShare:|r Allowed commands:")
+		print("|cff9999ffRareShare:|r     /rstest dump    -    Dump known rares")
 		print("|cff9999ffRareShare:|r     /rstest debug    -    Toggles debug mode ("..(RareShare:IsDebugMode() and "Enabled" or "Disabled")..")")
 		print("|cff9999ffRareShare:|r     /rstest announceexternal    -    Toggles debug mode ("..(RareShare:AllowAnnouncingOfExternalEvents() and "Enabled" or "Disabled")..")")
 		print("|cff9999ffRareShare:|r     /rstest alive    -    Sends a current-zone alive alert")

@@ -208,6 +208,10 @@ function RareShare:GetChannelSubscribersForTesting()
 	return chatSubscribers
 end
 
+function RareShare:GetKnownRaresForTesting()
+	return knownRares
+end
+
 local function decayRares()
 	local now = time()
 	for _, rare in pairs(knownRares) do
