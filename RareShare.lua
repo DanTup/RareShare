@@ -245,6 +245,7 @@ local frame = CreateFrame("MessageFrame", "RareShareTimer")
 frame:SetScript("OnUpdate", onUpdate)
 
 -- HACK: If author, enable boadcasting external events
-if UnitName("player") == "Shoomoo" then
+local me = UnitName("player")
+if me == "Shoomoo" or me == "Warmole" then
 	RareShare:EnableAnnouncingOfExternalEvents()
 end
