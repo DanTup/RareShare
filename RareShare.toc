@@ -2,7 +2,7 @@
 ## Title: RareShare
 ## Notes: RareShare receives and shares information on the locations and current HP of rare mobs both on The Timeless Isle and across the rest of Azeroth and Outland.
 ## Author: DanTup
-## Version: 0.10
+## Version: 1.0
 Common.lua
 RareShare.lua
 Subscriber-DebugChat.lua
