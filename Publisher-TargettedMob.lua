@@ -39,12 +39,6 @@ function handleTargetHealth(unit)
 	end
 end
 
-local function onChat(message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter, guid)
-	if channelName == chatChannel then
-		handler(sender, message)
-	end
-end
-
 function onEvent(self, event, ...)
 	if event == "PLAYER_TARGET_CHANGED" then
 		handleTarget()
