@@ -40,6 +40,10 @@ function handleTargetHealth(unit)
 	end
 end
 
+function handleMouseover()
+	handleTarget("mouseover")
+end
+
 function onEvent(self, event, ...)
 	if event == "PLAYER_TARGET_CHANGED" then
 		handleTarget()
@@ -47,6 +51,10 @@ function onEvent(self, event, ...)
 
 	if event == "UNIT_HEALTH" then
 		handleTargetHealth(...)
+	end
+
+	if event == "UPDATE_MOUSEOVER_UNIT" then
+		handleMouseover()
 	end
 end
 
@@ -72,3 +80,4 @@ frame:SetScript("OnEvent", onEvent)
 frame:SetScript("OnUpdate", onUpdate)
 frame:RegisterEvent("PLAYER_TARGET_CHANGED")
 frame:RegisterEvent("UNIT_HEALTH")
+frame:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
