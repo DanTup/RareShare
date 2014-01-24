@@ -23,7 +23,7 @@ function UnitID(unit)
 end
 
 function UnitIDFromGuid(unitGuid)
-	return tonumber((unitGuid):sub(-12, -9), 16)
+	return tonumber((unitGuid):sub(6, 10), 16)
 end
 
 -- HACK!!!! Our terrible string.split doesn't handle empty strings, so this is a big hack to get stuff working
