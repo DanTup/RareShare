@@ -17,7 +17,7 @@ local function AnnounceInChat(rare)
 	if channelNumber == 0 or channelNumber == nil then return end
 
 	if rare.MajorEvent and rare.AllowAnnouncing then
-		if rare.EventType == "Alive" then
+		if rare.EventType == "Alive" and rare.Health >= 50 then -- Only announce in chat when the mob has enough HP for it to be worthwhile
 			SendChatMessage("[RareShare] "..rare.Name.." spotted around "..rare.X..","..rare.Y.." with "..rare.Health.."% HP!", "CHANNEL", nil, channelNumber)
 			announcedRares[rare.ID] = true
 		elseif rare.EventType == "Dead" and announcedRares[rare.ID] then
