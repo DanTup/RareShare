@@ -1,18 +1,19 @@
-﻿function handleTarget()
-	if not UnitExists("target") then
+﻿function handleTarget(unit)
+	unit = unit or "target"
+	if not UnitExists(unit) then
 		return
 	end
 	-- Bail out if target is not a rare/rareelite
-	local targetType = UnitClassification("target")
+	local targetType = UnitClassification(unit)
 	if targetType ~= "rare" and targetType ~= "rareelite" then return end
 
-	local rareName, _ = UnitName("target")
-	local rareHealth = toint(UnitHealth("target") / UnitHealthMax("target") * 100)
+	local rareName, _ = UnitName(unit)
+	local rareHealth = toint(UnitHealth(unit) / UnitHealthMax(unit) * 100)
 	SetMapToCurrentZone()
 	local rareX, rareY = GetPlayerMapPosition("player")
 	rareX = toint(rareX * 100 + .5)
 	rareY = toint(rareY * 100 + .5)
-	local rareID = UnitID("target")
+	local rareID = UnitID(unit)
 
 	if rareHealth < 1 then return end
 
