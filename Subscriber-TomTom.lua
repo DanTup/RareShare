@@ -1,6 +1,9 @@
 ﻿local waypoints = {}
 
 local function UpdateWaypoints(rare)
+	-- Never do anything if disabled
+	if not RareShare:AllowTomTom() then return end
+
 	if TomTom == nil then return end
 
 	-- Remove any existing waypoint

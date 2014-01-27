@@ -40,7 +40,8 @@ local rareShareDefaultSettings = {
 	Debug = false,
 	AnnounceExternal = false,
 	Announce = true,
-	Sounds = true
+	Sounds = true,
+	TomTom = true
 }
 
 local function getSetting(name)
@@ -70,6 +71,9 @@ function RareShare:ToggleAllowAnnouncing() setSetting("Announce", not getSetting
 
 function RareShare:AllowSounds() return getSetting("Sounds") end
 function RareShare:ToggleAllowSounds() setSetting("Sounds", not getSetting("Sounds")) end
+
+function RareShare:AllowTomTom() return getSetting("TomTom") end
+function RareShare:ToggleAllowTomTom() setSetting("TomTom", not getSetting("TomTom")) end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end
@@ -288,10 +292,18 @@ local function slashHandler(msg)
 		else
 			print("|cff9999ffRareShare:|r Sounds disabled")
 		end
+	elseif msg == "tomtom" then
+		RareShare:ToggleAllowTomTom()
+		if RareShare:AllowTomTom() then
+			print("|cff9999ffRareShare:|r TomTom waypoints enabled")
+		else
+			print("|cff9999ffRareShare:|r TomTom waypoints disabled")
+		end
 	else
 		print("|cff9999ffRareShare:|r RareShare by DanTup - Commands:")
-		print("|cff9999ffRareShare:|r     /rs announce    -    Toggles announcing of rares in Generl Chat ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
-		print("|cff9999ffRareShare:|r     /rs sounds    -    Toggles the DIIIIING sound when a rare is discovered ("..(RareShare:AllowSounds() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rs announce  -  Toggles announcing of rares in Generl Chat ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rs sounds  -  Toggles DING sound when a rare is discovered ("..(RareShare:AllowSounds() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rs tomtom  -  Toggles the creation of TomTom waypoints for rares ("..(RareShare:AllowTomTom() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 	end
 end
 
