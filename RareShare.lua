@@ -35,6 +35,25 @@ function RareShare:ResetState()
 	latestRareMessages = {}
 end
 
+-- Default settings, used when the item s not found in the users settings
+local rareShareDefaultSettings = {
+}
+
+local function getSetting(name)
+	RareShareSettings = RareShareSettings or {}
+	local userSetting = RareShareSettings[name]
+	if userSetting ~= nil then
+		return userSetting
+	else
+		return rareShareDefaultSettings[name]
+	end
+end
+
+local function setSetting(name, value)
+	RareShareSettings = RareShareSettings or {}
+	RareShareSettings[name] = value
+end
+
 function RareShare:IsDebugMode() return isDebugMode end
 function RareShare:ToggleDebugMode() isDebugMode = not isDebugMode end
 function RareShare:EnableDebugMode() isDebugMode = true end
