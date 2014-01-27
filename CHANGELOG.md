@@ -1,4 +1,13 @@
-﻿RareShare v1.0
+﻿RareShare v1.1
+===
+- Added a command '/rs' to list status of RareShare options
+- Added an option to toggle announcing of rares in chat, toggled with '/rs announce'
+- Added an option to toggle playing sounds upon discovering a rare, toggled with '/rs sounds'
+- Added an option to toggle creation of TomTom waypoints, toggled with '/rs tomtom'
+- All RareShare options persist across logins/reloads and are shared across all characters
+
+
+RareShare v1.0
 ===
 - Don't announce rares in chat if they're below 50% health to reduce volume of messages (it's unlikely people will get there in time anyway). This does not affect display of TomTom waypoints of sharing of data for these rares
 - Added support for detecting rares by simply rolling your mouse over them, without having to explicitly target them
