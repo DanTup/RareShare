@@ -39,7 +39,8 @@ end
 local rareShareDefaultSettings = {
 	Debug = false,
 	AnnounceExternal = false,
-	Announce = true
+	Announce = true,
+	Sounds = true
 }
 
 local function getSetting(name)
@@ -66,6 +67,9 @@ function RareShare:ToggleAllowAnnouncingOfExternalEvents() setSetting("AnnounceE
 
 function RareShare:AllowAnnouncing() return getSetting("Announce") end
 function RareShare:ToggleAllowAnnouncing() setSetting("Announce", not getSetting("Announce")) end
+
+function RareShare:AllowSounds() return getSetting("Sounds") end
+function RareShare:ToggleAllowSounds() setSetting("Sounds", not getSetting("Sounds")) end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end
@@ -277,9 +281,17 @@ local function slashHandler(msg)
 		else
 			print("|cff9999ffRareShare:|r General Chat announcement disabled")
 		end
+	elseif msg == "sounds" then
+		RareShare:ToggleAllowSounds()
+		if RareShare:AllowSounds() then
+			print("|cff9999ffRareShare:|r Sounds enabled")
+		else
+			print("|cff9999ffRareShare:|r Sounds disabled")
+		end
 	else
 		print("|cff9999ffRareShare:|r RareShare by DanTup - Commands:")
 		print("|cff9999ffRareShare:|r     /rs announce    -    Toggles announcing of rares in Generl Chat ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rs sounds    -    Toggles the DIIIIING sound when a rare is discovered ("..(RareShare:AllowSounds() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 	end
 end
 
