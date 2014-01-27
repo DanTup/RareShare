@@ -273,13 +273,13 @@ local function slashHandler(msg)
 	if msg == "announce" then
 		RareShare:ToggleAllowAnnouncing()
 		if RareShare:AllowAnnouncing() then
-			print("|cff9999ffRareShare:|r Announce mode mode enabled")
+			print("|cff9999ffRareShare:|r General Chat announcement enabled")
 		else
-			print("|cff9999ffRareShare:|r Announce mode disabled")
+			print("|cff9999ffRareShare:|r General Chat announcement disabled")
 		end
 	else
-		print("|cff9999ffRareShare:|r Allowed commands:")
-		print("|cff9999ffRareShare:|r     /rs announce    -    Toggles announce mode ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r RareShare by DanTup - Commands:")
+		print("|cff9999ffRareShare:|r     /rs announce    -    Toggles announcing of rares in Generl Chat ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 	end
 end
 
