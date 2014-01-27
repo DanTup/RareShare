@@ -37,6 +37,8 @@ end
 
 -- Default settings, used when the item s not found in the users settings
 local rareShareDefaultSettings = {
+	Debug = false,
+	AnnounceExternal = false
 }
 
 local function getSetting(name)
@@ -54,13 +56,12 @@ local function setSetting(name, value)
 	RareShareSettings[name] = value
 end
 
-function RareShare:IsDebugMode() return isDebugMode end
-function RareShare:ToggleDebugMode() isDebugMode = not isDebugMode end
-function RareShare:EnableDebugMode() isDebugMode = true end
+function RareShare:IsDebugMode() return getSetting("Debug") end
+function RareShare:ToggleDebugMode() setSetting("Debug", not getSetting("Debug")) end
+function RareShare:EnableDebugMode() setSetting("Debug", true) end
 
-function RareShare:AllowAnnouncingOfExternalEvents() return allowAnnouncingOfExternalEvents end
-function RareShare:ToggleAllowAnnouncingOfExternalEvents() allowAnnouncingOfExternalEvents = not allowAnnouncingOfExternalEvents end
-function RareShare:EnableAnnouncingOfExternalEvents() allowAnnouncingOfExternalEvents = true end
+function RareShare:AllowAnnouncingOfExternalEvents() return getSetting("AnnounceExternal") end
+function RareShare:ToggleAllowAnnouncingOfExternalEvents() setSetting("AnnounceExternal", not getSetting("AnnounceExternal")) end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end
@@ -262,9 +263,3 @@ end
 
 local frame = CreateFrame("MessageFrame", "RareShareTimer")
 frame:SetScript("OnUpdate", onUpdate)
-
--- HACK: If author, enable boadcasting external events
-local me = UnitName("player")
-if me == "Shoomoo" or me == "Warmole" then
-	RareShare:EnableAnnouncingOfExternalEvents()
-end
