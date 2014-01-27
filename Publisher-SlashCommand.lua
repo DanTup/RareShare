@@ -80,8 +80,8 @@ local function slashHandler(msg)
 	else
 		print("|cff9999ffRareShare:|r Allowed commands:")
 		print("|cff9999ffRareShare:|r     /rstest dump    -    Dump known rares")
-		print("|cff9999ffRareShare:|r     /rstest debug    -    Toggles debug mode ("..(RareShare:IsDebugMode() and "Enabled" or "Disabled")..")")
-		print("|cff9999ffRareShare:|r     /rstest announceexternal    -    Toggles debug mode ("..(RareShare:AllowAnnouncingOfExternalEvents() and "Enabled" or "Disabled")..")")
+		print("|cff9999ffRareShare:|r     /rstest debug    -    Toggles debug mode ("..(RareShare:IsDebugMode() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rstest announceexternal    -    Toggles debug mode ("..(RareShare:AllowAnnouncingOfExternalEvents() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 		print("|cff9999ffRareShare:|r     /rstest alive    -    Sends a current-zone alive alert")
 		print("|cff9999ffRareShare:|r     /rstest dead    -    Sends a current-zone dead alert")
 		print("|cff9999ffRareShare:|r     /rstest alive other    -    Sends an other-zone alive alert")
@@ -89,5 +89,5 @@ local function slashHandler(msg)
 	end
 end
 
-SLASH_RARESHARE1 = '/rstest'
-SlashCmdList["RARESHARE"] = slashHandler
+SLASH_RARESHARETEST1 = '/rstest'
+SlashCmdList["RARESHARETEST"] = slashHandler
