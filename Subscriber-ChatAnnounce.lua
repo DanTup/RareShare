@@ -13,6 +13,9 @@ local function getGeneralChat(id, name, ...)
 end
 
 local function AnnounceInChat(rare)
+	-- Never do any sort of chat announcing if disabled
+	if not RareShare:AllowAnnouncing() then return end
+
 	local channelNumber = getGeneralChat(GetChannelList())
 	if channelNumber == 0 or channelNumber == nil then return end
 

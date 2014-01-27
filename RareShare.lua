@@ -38,7 +38,8 @@ end
 -- Default settings, used when the item s not found in the users settings
 local rareShareDefaultSettings = {
 	Debug = false,
-	AnnounceExternal = false
+	AnnounceExternal = false,
+	Announce = true
 }
 
 local function getSetting(name)
@@ -62,6 +63,9 @@ function RareShare:EnableDebugMode() setSetting("Debug", true) end
 
 function RareShare:AllowAnnouncingOfExternalEvents() return getSetting("AnnounceExternal") end
 function RareShare:ToggleAllowAnnouncingOfExternalEvents() setSetting("AnnounceExternal", not getSetting("AnnounceExternal")) end
+
+function RareShare:AllowAnnouncing() return getSetting("Announce") end
+function RareShare:ToggleAllowAnnouncing() setSetting("Announce", not getSetting("Announce")) end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end
@@ -263,3 +267,22 @@ end
 
 local frame = CreateFrame("MessageFrame", "RareShareTimer")
 frame:SetScript("OnUpdate", onUpdate)
+
+
+local function slashHandler(msg)
+	if msg == "announce" then
+		RareShare:ToggleAllowAnnouncing()
+		if RareShare:AllowAnnouncing() then
+			print("|cff9999ffRareShare:|r Announce mode mode enabled")
+		else
+			print("|cff9999ffRareShare:|r Announce mode disabled")
+		end
+	else
+		print("|cff9999ffRareShare:|r Allowed commands:")
+		print("|cff9999ffRareShare:|r     /rs announce    -    Toggles announce mode ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+	end
+end
+
+SLASH_RARESHARE1 = '/rareshare'
+SLASH_RARESHARE2 = '/rs'
+SlashCmdList["RARESHARE"] = slashHandler
