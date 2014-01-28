@@ -41,7 +41,8 @@ local rareShareDefaultSettings = {
 	AnnounceExternal = false,
 	Announce = true,
 	Sounds = true,
-	TomTom = true
+	TomTom = true,
+	SuppressFullHealthEvermaw = true
 }
 
 local function getSetting(name)
@@ -74,6 +75,9 @@ function RareShare:ToggleAllowSounds() setSetting("Sounds", not getSetting("Soun
 
 function RareShare:AllowTomTom() return getSetting("TomTom") end
 function RareShare:ToggleAllowTomTom() setSetting("TomTom", not getSetting("TomTom")) end
+
+function RareShare:SuppressFullHealthEvermaw() return getSetting("SuppressFullHealthEvermaw") end
+function RareShare:ToggleSuppressFullHealthEvermaw() setSetting("SuppressFullHealthEvermaw", not getSetting("SuppressFullHealthEvermaw")) end
 
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end
@@ -149,6 +153,14 @@ function RareShare:Publish(rare)
 				ignoreMessage(rare, "Bad health message")
 				return
 			end
+		end
+	end
+
+	-- Ignore Evermaw when 100% health (if enabled)
+	if RareShare:SuppressFullHealthEvermaw() then
+		if rare.ID == 73279 and rare.Health == 100 then
+			ignoreMessage(rare, "Evermaw at 100%")
+			return
 		end
 	end
 
@@ -299,11 +311,19 @@ local function slashHandler(msg)
 		else
 			print("|cff9999ffRareShare:|r TomTom waypoints disabled")
 		end
+	elseif msg == "evermaw" then
+		RareShare:ToggleSuppressFullHealthEvermaw()
+		if RareShare:SuppressFullHealthEvermaw() then
+			print("|cff9999ffRareShare:|r Evermaw announcements will be suppressed when 100% health")
+		else
+			print("|cff9999ffRareShare:|r Evermaw will be announced even at 100% health")
+		end
 	else
 		print("|cff9999ffRareShare:|r RareShare by DanTup - Commands:")
-		print("|cff9999ffRareShare:|r     /rs announce  -  Toggles announcing of rares in Generl Chat ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rs announce  -  Toggles announcing of rares in General Chat ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 		print("|cff9999ffRareShare:|r     /rs sounds  -  Toggles DING sound when a rare is discovered ("..(RareShare:AllowSounds() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 		print("|cff9999ffRareShare:|r     /rs tomtom  -  Toggles the creation of TomTom waypoints for rares ("..(RareShare:AllowTomTom() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rs evermaw  -  Toggles suppressing of Evermaw events when 100% health ("..(RareShare:SuppressFullHealthEvermaw() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 	end
 end
 
