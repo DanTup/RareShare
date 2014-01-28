@@ -24,7 +24,7 @@ local knownRares = {}
 local latestRareMessages = {}
 local chatSubscribers = {} -- NOTE: This doesn't get reset, as registered handlers are added at runtime; it's all setup stuff
 
-RareShare = {}
+RareShare = RareShare or {}
 
 -- Used for testing; need to be able to reset everything back to clean so that
 -- each test gets a clean run

@@ -34,7 +34,7 @@ names[71919] = "Zhu-Gon the Sour"
 
 
 local function handleMessage(sender, rcMessage)
-	local parts = string.split(rcMessage, "[^_]+")
+	local parts = RareShare:StringSplit(rcMessage, "[^_]+")
 	if #parts ~= 4 then
 		if RareShare:IsDebugMode() then
 			print("Unexpected RareCoordinator message: "..rcMessage)
@@ -43,8 +43,8 @@ local function handleMessage(sender, rcMessage)
 	end
 
 	local rare = { Zone = "Timeless Isle", SourceCharacter = sender, SourcePublisher = "RareCoordinator" }
-	rare.ID = toint(parts[2])
-	rare.Time = toint(parts[4])
+	rare.ID = RareShare:ToInt(parts[2])
+	rare.Time = RareShare:ToInt(parts[4])
 	rare.Name = names[rare.ID]
 
 	if rare.Name == nil then
@@ -57,12 +57,12 @@ local function handleMessage(sender, rcMessage)
 	local rcEventType = parts[3]
 	if rcEventType == "dead" then
 		rare.EventType = "Dead"
-	elseif rcEventType:starts("alive") then
+	elseif RareShare:StringStarts(rcEventType, "alive") then
 		rare.EventType = "Alive"
-		local loc = string.split(rcEventType, "[^,%-]+")
+		local loc = RareShare:StringSplit(rcEventType, "[^,%-]+")
 		if #loc == 3 then
-			rare.X = toint(loc[2])
-			rare.Y = toint(loc[3])
+			rare.X = RareShare:ToInt(loc[2])
+			rare.Y = RareShare:ToInt(loc[3])
 		else
 			return -- No location, old version of RC; so just ignore
 		end

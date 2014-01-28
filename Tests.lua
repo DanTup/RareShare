@@ -63,8 +63,8 @@ function test_only_first_alive_event_is_considered_major()
 			end
 		end
 	)
-	local message1 = clone(testRare)
-	local message2 = clone(testRare)
+	local message1 = RareShare:Clone(testRare)
+	local message2 = RareShare:Clone(testRare)
 	message2.Health = message2.Health - 1
 
 	RareShare:Publish(message1)
@@ -155,9 +155,9 @@ function test_rare_coordinator_messages_are_parsed_correctly()
 end
 
 function test_out_of_date_messages_get_ignored()
-	local message1 = clone(testRare) -- 100%
-	local message2 = clone(testRare) -- 50%
-	local message3 = clone(testRareDead) -- Dead
+	local message1 = RareShare:Clone(testRare) -- 100%
+	local message2 = RareShare:Clone(testRare) -- 50%
+	local message3 = RareShare:Clone(testRareDead) -- Dead
 
 	message1.Time = 10
 	message2.Time = 20
@@ -181,9 +181,9 @@ function test_out_of_date_messages_get_ignored()
 end
 
 function test_identical_messages_are_ignored_unless_at_least_some_seconds_have_passed()
-	local message1 = clone(testRare)
-	local message2 = clone(testRare) -- 2 seconds later
-	local message3 = clone(testRare) -- 20 seconds later
+	local message1 = RareShare:Clone(testRare)
+	local message2 = RareShare:Clone(testRare) -- 2 seconds later
+	local message3 = RareShare:Clone(testRare) -- 20 seconds later
 
 	message1.Time = 10
 	message2.Time = 12
@@ -205,8 +205,8 @@ function test_identical_messages_are_ignored_unless_at_least_some_seconds_have_p
 end
 
 function test_updated_health_messages_are_broadcast_even_if_some_seconds_have_not_passed()
-	local message1 = clone(testRare)
-	local message2 = clone(testRare) -- 2 seconds later
+	local message1 = RareShare:Clone(testRare)
+	local message2 = RareShare:Clone(testRare) -- 2 seconds later
 
 	message1.Time = 10
 	message2.Time = 12
@@ -227,8 +227,8 @@ function test_updated_health_messages_are_broadcast_even_if_some_seconds_have_no
 end
 
 function test_updated_location_messages_are_broadcast_even_if_some_seconds_have_not_passed()
-	local message1 = clone(testRare)
-	local message2 = clone(testRare) -- 2 seconds later
+	local message1 = RareShare:Clone(testRare)
+	local message2 = RareShare:Clone(testRare) -- 2 seconds later
 
 	message1.Time = 10
 	message2.Time = 12
@@ -249,10 +249,10 @@ function test_updated_location_messages_are_broadcast_even_if_some_seconds_have_
 end
 
 function test_dont_update_health_with_unreliable_values()
-	local message1 = clone(testRare) -- 95% reliable
-	local message2 = clone(testRare) -- 90% unreliable, ignored because too close
-	local message3 = clone(testRare) -- 93% reliable
-	local message4 = clone(testRare) -- 80% unreliable, used because it's more than 10 off (HealthPriority)
+	local message1 = RareShare:Clone(testRare) -- 95% reliable
+	local message2 = RareShare:Clone(testRare) -- 90% unreliable, ignored because too close
+	local message3 = RareShare:Clone(testRare) -- 93% reliable
+	local message4 = RareShare:Clone(testRare) -- 80% unreliable, used because it's more than 10 off (HealthPriority)
 
 	message1.Health = 95
 	message2.Health = 90

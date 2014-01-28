@@ -10,7 +10,7 @@ local function ShareViaChat(rare)
 	end
 
 	if rareShareChatChannel ~= nil and rareShareChatChannel > 0 and not rare.SuppressSharing then
-		local message = rare.ID..rareShareSep..nilToWordNil(rare.Name)..rareShareSep..nilToWordNil(rare.Zone)..rareShareSep..rare.EventType..rareShareSep..nilToWordNil(rare.Health)..rareShareSep..nilToWordNil(rare.X)..rareShareSep..nilToWordNil(rare.Y)..rareShareSep..nilToWordNil(rare.Time)
+		local message = rare.ID..rareShareSep..RareShare:NilToWordNil(rare.Name)..rareShareSep..RareShare:NilToWordNil(rare.Zone)..rareShareSep..rare.EventType..rareShareSep..RareShare:NilToWordNil(rare.Health)..rareShareSep..RareShare:NilToWordNil(rare.X)..rareShareSep..RareShare:NilToWordNil(rare.Y)..rareShareSep..RareShare:NilToWordNil(rare.Time)
 		SendChatMessage(message, "CHANNEL", nil, rareShareChatChannel)
 	end
 end

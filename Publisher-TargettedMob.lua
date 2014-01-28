@@ -8,17 +8,17 @@
 	if targetType ~= "rare" and targetType ~= "rareelite" then return end
 
 	local rareName, _ = UnitName(unit)
-	local rareHealth = toint(UnitHealth(unit) / UnitHealthMax(unit) * 100)
+	local rareHealth = RareShare:ToInt(UnitHealth(unit) / UnitHealthMax(unit) * 100)
 	SetMapToCurrentZone()
 	local rareX, rareY = GetPlayerMapPosition("player")
-	rareX = toint(rareX * 100 + .5)
-	rareY = toint(rareY * 100 + .5)
-	local rareID = UnitID(unit)
+	rareX = RareShare:ToInt(rareX * 100 + .5)
+	rareY = RareShare:ToInt(rareY * 100 + .5)
+	local rareID = RareShare:UnitID(unit)
 
 	if rareHealth < 1 then return end
 
 	local rare = {
-		ID = toint(rareID),
+		ID = RareShare:ToInt(rareID),
 		Name = rareName,
 		Zone = GetZoneText(),
 		EventType = "Alive",

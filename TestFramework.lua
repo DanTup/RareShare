@@ -7,7 +7,7 @@ require "Publisher-RareCoordinator"
 
 allTests = {}
 for name, value in pairs(_G) do
-	if name:starts("test_") then
+	if RareShare:StringStarts(name, "test_") then
 		name = name:sub(6)
 		name =  name:gsub("_", " ")
 		allTests[name] = value

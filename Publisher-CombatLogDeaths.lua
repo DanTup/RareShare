@@ -1,14 +1,14 @@
 ﻿function handleCombatLogDeaths(timeStamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags)
 	if event ~= "UNIT_DIED" then return end
 
-	local rareID = UnitIDFromGuid(destGUID)
+	local rareID = RareShare:UnitIDFromGuid(destGUID)
 
 	local rare = {
-		ID = toint(rareID),
+		ID = RareShare:ToInt(rareID),
 		Name = destName,
 		Zone = GetZoneText(),
 		EventType = "Dead",
-		Time = toint(timeStamp),
+		Time = RareShare:ToInt(timeStamp),
 		AllowAnnouncing = true,
 		SourceCharacter = UnitName("player"),
 		SourcePublisher = "RareShareCombatLog"

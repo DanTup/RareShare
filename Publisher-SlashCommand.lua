@@ -70,13 +70,13 @@ local function slashHandler(msg)
 			print("|cff9999ffRareShare:|r External events will no longer be announced")
 		end
 	elseif msg == "alive" then
-		RareShare:Publish(clone(testRareAlive))
+		RareShare:Publish(RareShare:Clone(testRareAlive))
 	elseif msg == "dead" then
-		RareShare:Publish(clone(testRareDead))
+		RareShare:Publish(RareShare:Clone(testRareDead))
 	elseif msg == "alive other" then
-		RareShare:Publish(clone(testRareAliveOtherZone))
+		RareShare:Publish(RareShare:Clone(testRareAliveOtherZone))
 	elseif msg == "dead other" then
-		RareShare:Publish(clone(testRareDeadOtherZone))
+		RareShare:Publish(RareShare:Clone(testRareDeadOtherZone))
 	else
 		print("|cff9999ffRareShare:|r Allowed commands:")
 		print("|cff9999ffRareShare:|r     /rstest dump    -    Dump known rares")
