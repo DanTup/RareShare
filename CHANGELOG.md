@@ -1,4 +1,8 @@
-﻿RareShare v1.2
+﻿RareShare v1.3
+===
+- Fixed a number of functions to no longer have global names, such that they conflicted with other addons/Blizzard functions, causing other addons/frames to not work correctly
+
+RareShare v1.2
 ===
 - Added an option to suppress Evermaw events when 100% health, toggled with '/rs evermaw', enabled by default
 
