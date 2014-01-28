@@ -1,4 +1,8 @@
-﻿RareShare v1.1
+﻿RareShare v1.2
+===
+- Added an option to suppress Evermaw events when 100% health, toggled with '/rs evermaw', enabled by default
+
+RareShare v1.1
 ===
 - Added a command '/rs' to list status of RareShare options
 - Added an option to toggle announcing of rares in chat, toggled with '/rs announce'
