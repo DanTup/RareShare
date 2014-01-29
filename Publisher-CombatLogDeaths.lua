@@ -1,4 +1,4 @@
-﻿function handleCombatLogDeaths(timeStamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags)
+﻿local function handleCombatLogDeaths(timeStamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags)
 	if event ~= "UNIT_DIED" then return end
 
 	local rareID = RareShare:UnitIDFromGuid(destGUID)
@@ -17,7 +17,7 @@
 	RareShare:Publish(rare)
 end
 
-function onEvent(self, event, ...)
+local function onEvent(self, event, ...)
 	if event == "COMBAT_LOG_EVENT_UNFILTERED" then
 		handleCombatLogDeaths(...)
 	end

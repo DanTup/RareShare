@@ -1,4 +1,4 @@
-﻿function handleTarget(unit)
+﻿local function handleTarget(unit)
 	unit = unit or "target"
 	if not UnitExists(unit) then
 		return
@@ -34,17 +34,17 @@
 	RareShare:Publish(rare)
 end
 
-function handleTargetHealth(unit)
+local function handleTargetHealth(unit)
 	if unit == "target" then
 		handleTarget()
 	end
 end
 
-function handleMouseover()
+local function handleMouseover()
 	handleTarget("mouseover")
 end
 
-function onEvent(self, event, ...)
+local function onEvent(self, event, ...)
 	if event == "PLAYER_TARGET_CHANGED" then
 		handleTarget()
 	end
@@ -61,7 +61,7 @@ end
 -- We want to provide updates even if the rare health is not changing (eg. player chasing Evermaw around)
 -- but we don't want to do this every frame, so just poll every 5 seconds
 local timeTillUpdate = 5.0
-function onUpdate(self, elapsed)
+local function onUpdate(self, elapsed)
 	-- Do absolutely nothing if there's no target
 	if not UnitExists("target") then return end
 
