@@ -114,6 +114,10 @@ local function log(message)
 	end
 end
 
+function RareShare:Debug(message)
+	log(message)
+end
+
 local function ignoreMessage(rare, reason)
 	local message = rare.ID..", "
 	if rare.Name then message = message..rare.Name..", " end
