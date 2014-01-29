@@ -151,10 +151,13 @@ function RareShare:Publish(rare)
 		return
 	end
 
+	-- TODO: This uses local time, so assumes all clocks are synchronised :(
+	--       We should instead check health isn't going up, or a dead mob alive without at
+	--       least x seconds passed
 	-- Check that this message isn't older than one we already parsed
 	-- We're allowing messages with the *same* time, simply because lua time() is to the second, and it's better to dupe than miss events
 	if latestRareMessages[rare.ID] and latestRareMessages[rare.ID] > rare.Time then
-		ignoreMessage(rare, "Out of date")
+		ignoreMessage(rare, "Out of date (got: "..rare.Time.." but already had "..latestRareMessages[rare.ID]..")")
 		return
 	end
 
@@ -169,7 +172,7 @@ function RareShare:Publish(rare)
 		-- If health priority is worse than previous
 		if not knownRares[rare.ID].HealthPiority or knownRares[rare.ID].HealthPiority < rare.HealthPriority then
 			if knownRares[rare.ID].Health - rare.Health < rare.HealthPriority then
-				ignoreMessage(rare, "Bad health message")
+				ignoreMessage(rare, "Bad health message (got "..rare.Health.." (prio "..rare.HealthPriority..") but previously had "..knownRares[rare.ID].Health..")")
 				return
 			end
 		end
