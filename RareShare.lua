@@ -23,6 +23,7 @@ local unfilteredSubscribers = {}
 local knownRares = {}
 local latestRareMessages = {}
 local chatSubscribers = {} -- NOTE: This doesn't get reset, as registered handlers are added at runtime; it's all setup stuff
+local isCrz = false -- Whether we're in a CRZ group, and RareShare needs to be disabled
 
 RareShare = RareShare or {}
 
@@ -79,6 +80,17 @@ function RareShare:ToggleAllowTomTom() setSetting("TomTom", not getSetting("TomT
 function RareShare:SuppressFullHealthEvermaw() return getSetting("SuppressFullHealthEvermaw") end
 function RareShare:ToggleSuppressFullHealthEvermaw() setSetting("SuppressFullHealthEvermaw", not getSetting("SuppressFullHealthEvermaw")) end
 
+function RareShare:SetIsCrz(isInCrz)
+	if isCrz ~= isInCrz then
+		isCrz = isInCrz
+		if isCrz then
+			print("|cff9999ffRareShare:|r RareShare has been disabled because you're in a coalesced group")
+		else
+			print("|cff9999ffRareShare:|r RareShare has been re-enabled because you're no longer in a coalesced group")
+		end
+	end
+end
+
 function RareShare:ValidateRare(rare)
 	if rare == nil then return "rare == nil" end
 	if rare.SourceCharacter == nil then return "SourceCharacter" end
@@ -124,6 +136,9 @@ function RareShare:RegisterSubscriber(sub, includeOutOfZoneEvents)
 end
 
 function RareShare:Publish(rare)
+	-- Don't do anything at all if in a coalesced group; because we can't trust any events published are in the actual zone we're in!
+	if isCrz then return end
+
 	-- TODO: Some cleaning up of data, eg. force ID to int, etc.
 
 	local validationResults = RareShare:ValidateRare(rare)

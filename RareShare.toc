@@ -16,3 +16,4 @@ Publisher-SlashCommand.lua
 Publisher-TargettedMob.lua
 Publisher-CombatLogDeaths.lua
 Publisher-RareCoordinator.lua
+RareShare-CRZ-Disabler.lua
