@@ -21,5 +21,6 @@ local function DumpRareToChatFiltered(rare)
 	DumpRareToChat(rare, "|cffff9999ZONE|r")
 end
 
-RareShare:RegisterSubscriber(DumpRareToChatUnfiltered, true)
-RareShare:RegisterSubscriber(DumpRareToChatFiltered)
+-- Enable these in source as required; otherwise the volume of events makes normal debug messages hard to monitor!
+--RareShare:RegisterSubscriber(DumpRareToChatUnfiltered, true)
+--RareShare:RegisterSubscriber(DumpRareToChatFiltered)
