@@ -290,7 +290,7 @@ end
 
 -- We want to periodically process old rares and "Decay" them (notify subscribers they're out-of-date, without marking them dead)
 local timeTillDecay = 5.0
-function onUpdate(self, elapsed)
+local function onUpdate(self, elapsed)
 	timeTillDecay = timeTillDecay - elapsed
 
 	if timeTillDecay < 0 then
