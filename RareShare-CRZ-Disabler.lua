@@ -18,11 +18,7 @@ local function checkForCRZ()
 		end
 	end
 
-	if isPossiblyCoalesced then
-		RareShare:SetIsCrz(true)
-	else
-		RareShare:SetIsCrz(false)
-	end
+	RareShare:SetIsCrz(isPossiblyCoalesced)
 end
 
 local frame = CreateFrame("MessageFrame", "RareShareCRZDisabler")
