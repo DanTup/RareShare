@@ -1,4 +1,8 @@
-﻿RareShare v1.4
+﻿RareShare v1.5
+===
+- Debug text (UnitIDs like "party1", "raid2") will no longer be printed to the chat window when joining/leaving groups
+
+RareShare v1.4
 ===
 - RareShare will now automatically be disabled when in a group that contains people from multiple (non-connected) realms, due to no API to detect which realms zone you're actually in
 
