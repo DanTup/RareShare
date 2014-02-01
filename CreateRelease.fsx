@@ -67,7 +67,9 @@ let get_release_files() =
         allFiles |>
         Array.filter (fun f -> not <| f.Name.StartsWith("Test")) |>
         Array.filter (fun f -> f.Name <> "CreateRelease.fsx") |>
-        Array.filter (fun f -> f.Name <> "RunTests.bat")
+        Array.filter (fun f -> f.Name <> "RunTests.bat") |>
+        Array.filter (fun f -> f.Name <> "RareShare.sln") |>
+        Array.filter (fun f -> f.Name <> "RareShare.v12.suo")
     filteredFiles
 
 let copy_to_temp_release_folder (files : FileInfo[]) =
