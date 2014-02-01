@@ -11,7 +11,6 @@ local function checkForCRZ()
 
 	local isPossiblyCoalesced = false
 	for i = 0, GetNumGroupMembers() do
-		print(prefix..i)
 		if UnitRealmRelationship(prefix..i) == LE_REALM_RELATION_COALESCED then
 			isPossiblyCoalesced = true
 			break
