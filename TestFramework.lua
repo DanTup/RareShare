@@ -13,7 +13,7 @@ end
 
 local function XmlEncode(s)
 	-- TODO: Make this better
-	return s:gsub("<", "&lt;"):gsub(">", "&gt;")
+	return (s or ""):gsub("<", "&lt;"):gsub(">", "&gt;")
 end
 
 
@@ -31,7 +31,7 @@ local function ExecuteTests()
 	for name, value in pairs(allTests) do
 		RareShareTests:ResetEnvironment()
 
-		local printStack = function(err) return debug.traceback(err) end
+		local printStack = function(err) return { err, debug.traceback(err) } end
 		local pass, err = xpcall(value, printStack)
 
 		if outputXml then
@@ -40,11 +40,12 @@ local function ExecuteTests()
 			print("	<Test>")
 			print("		<Name>"..XmlEncode(name).."</Name>")
 			print("		<DisplayName>"..XmlEncode(name:gsub("_", " ")).."</DisplayName>")
-			print("		<File>"..info.source.."</File>")
-			print("		<Line>"..info.linedefined.."</Line>")
-			print("		<Result>"..(pass and "Pass" or "Fail").."</Result>")
+			print("		<CodeFilePath>"..info.source.."</CodeFilePath>")
+			print("		<LineNumber>"..info.linedefined.."</LineNumber>")
+			print("		<Outcome>"..(pass and "Passed" or "Failed").."</Outcome>")
 			if not pass then
-				print("		<Reason>"..XmlEncode(err).."</Reason>")
+				print("		<ErrorMessage>"..XmlEncode(err[1]).."</ErrorMessage>")
+				print("		<ErrorStackTrace>"..XmlEncode(err[2]).."</ErrorStackTrace>")
 			end
 			print("	</Test>")
 		else
