@@ -21,7 +21,6 @@ allTests = {}
 for name, value in pairs(_G) do
 	if StringStarts(name, "test_") then
 		name = name:sub(6)
-		name =  name:gsub("_", " ")
 		allTests[name] = value
 	end
 end
@@ -36,8 +35,13 @@ local function ExecuteTests()
 		local pass, err = xpcall(value, printStack)
 
 		if outputXml then
+			local info = debug.getinfo(value)
+
 			print("	<Test>")
 			print("		<Name>"..XmlEncode(name).."</Name>")
+			print("		<DisplayName>"..XmlEncode(name:gsub("_", " ")).."</DisplayName>")
+			print("		<File>"..info.source.."</File>")
+			print("		<Line>"..info.linedefined.."</Line>")
 			print("		<Result>"..(pass and "Pass" or "Fail").."</Result>")
 			if not pass then
 				print("		<Reason>"..XmlEncode(err).."</Reason>")
@@ -45,9 +49,9 @@ local function ExecuteTests()
 			print("	</Test>")
 		else
 			if pass then
-				print("PASS", name)
+				print("PASS", name:gsub("_", " "))
 			else
-				print("FAIL", name)
+				print("FAIL", name:gsub("_", " "))
 				print(err)
 			end
 		end
@@ -68,11 +72,16 @@ local function ListTests()
 	if outputXml then print("<Tests>") end
 	for name, value in pairs(allTests) do
 		if outputXml then
+			local info = debug.getinfo(value)
+
 			print("	<Test>")
 			print("		<Name>"..XmlEncode(name).."</Name>")
+			print("		<DisplayName>"..XmlEncode(name:gsub("_", " ")).."</DisplayName>")
+			print("		<File>"..info.source.."</File>")
+			print("		<Line>"..info.linedefined.."</Line>")
 			print("	</Test>")
 		else
-			print(name)
+			print(name:gsub("_", " "))
 		end
 	end
 	if outputXml then print("</Tests>") end
