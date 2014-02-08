@@ -1,13 +1,12 @@
-﻿require "Common"
-require "TestFunctions"
-require "RareShare"
-require "TestRares"
-require "Tests"
-require "Publisher-RareCoordinator"
+﻿require(arg[1])
+
+local function StringStarts(s, start)
+	return s:sub(1, start:len()) == start
+end
 
 allTests = {}
 for name, value in pairs(_G) do
-	if RareShare:StringStarts(name, "test_") then
+	if StringStarts(name, "test_") then
 		name = name:sub(6)
 		name =  name:gsub("_", " ")
 		allTests[name] = value

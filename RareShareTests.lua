@@ -1,0 +1,6 @@
+﻿require "Common"
+require "TestFunctions"
+require "RareShare"
+require "TestRares"
+require "Tests"
+require "Publisher-RareCoordinator"
