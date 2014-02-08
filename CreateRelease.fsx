@@ -66,6 +66,7 @@ let get_release_files() =
     let filteredFiles =
         allFiles |>
         Array.filter (fun f -> not <| f.Name.StartsWith("Test")) |>
+        Array.filter (fun f -> f.Name <> "RareShareTests.lua") |>
         Array.filter (fun f -> f.Name <> "CreateRelease.fsx") |>
         Array.filter (fun f -> f.Name <> "RunTests.bat") |>
         Array.filter (fun f -> f.Name <> "RareShare.sln") |>
