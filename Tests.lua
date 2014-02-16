@@ -1,4 +1,8 @@
-﻿function test_publish_and_subscribe()
+﻿function testframework_setup()
+	RareShareTests:ResetEnvironment()
+end
+
+function test_publish_and_subscribe()
 	local eventFiredCorrectly = false
 	RareShare:RegisterSubscriber(
 		function(rare)
