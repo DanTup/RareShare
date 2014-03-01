@@ -4,6 +4,7 @@ function RareShareTests:ResetEnvironment()
 	RareShare:ResetState()
 	RareShare:EnableDebugMode()
 	currentZone = "Timeless Isle"
+	lastChatMessage = ""
 end
 
 currentZone = "Timeless Isle"
@@ -22,6 +23,10 @@ function RareShareTests:BroadcastChat(channel, sender, message)
 	end
 end
 
+lastChatMessage = ""
+function RareShareTests:GetLastChatMessage()
+	return lastChatMessage
+end
 
 
 
@@ -33,6 +38,15 @@ end
 
 function time()
 	return os.time()
+end
+
+function SendChatMessage(msg)
+	lastChatMessage = msg
+end
+
+GENERAL = "GENERAL"
+function GetChannelList()
+	return 1, "GENERAL"
 end
 
 function CreateFrame()
