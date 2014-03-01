@@ -138,6 +138,32 @@ function test_subscribers_do_get_other_zone_events_if_requested()
 	assert(eventFiredCorrectly)
 end
 
+function test_announcements_enabled()
+	-- Enable announcing
+	dofile "Subscriber-ChatAnnounce.lua"
+	if not RareShare:AllowAnnouncing() then RareShare:ToggleAllowAnnouncing() end
+
+	-- Send TI rare
+	local rare = testRareNotTimelessIsle
+	RareShareTests:SetZone(rare.Zone)
+	RareShare:Publish(rare)
+
+	assert(RareShareTests:GetLastChatMessage() == "[RareShare] "..rare.Name.." spotted around "..rare.X..","..rare.Y.." with "..rare.Health.."% HP!", RareShareTests:GetLastChatMessage())
+end
+
+function test_announcements_disabled()
+	-- Enable announcing
+	dofile "Subscriber-ChatAnnounce.lua"
+	if RareShare:AllowAnnouncing() then RareShare:ToggleAllowAnnouncing() end
+
+	-- Send non-TI rare
+	local rare = testRareNotTimelessIsle
+	RareShareTests:SetZone(rare.Zone)
+	RareShare:Publish(rare)
+
+	assert(RareShareTests:GetLastChatMessage() == "")
+end
+
 function test_rare_coordinator_messages_are_parsed_correctly()
 	local broadcastRare = nil
 	RareShare:RegisterSubscriber(
@@ -281,3 +307,5 @@ function test_dont_update_health_with_unreliable_values()
 	-- Ensure we got both message
 	assert_tables_eq(receivedMessageHealths, { 95, 93, 80 }) -- Message 2 is ignored due to being too close to first, once health is updated
 end
+
+-- Use GetCurrentMapDungeonLevel to avoid Timeless Isle/cave overlap
