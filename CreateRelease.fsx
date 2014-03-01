@@ -43,7 +43,7 @@ let get_version_from_toc() =
     fun l -> l.Replace("## Version: ", "")
 
 let ensure_no_outstanding_changes() =
-    let git = """C:\Users\Danny\AppData\Local\GitHub\PortableGit_fed20eba68b3e238e49a47cdfed0a45783d93651\bin\git.exe"""
+    let git = """C:\Users\Danny\AppData\Local\GitHub\PortableGit_054f2e797ebafd44a30203088cd3d58663c627ef\bin\git.exe"""
     let statusOutput = run git "status -s"
     if statusOutput <> "" then
         error("Uncommitted changes!")
