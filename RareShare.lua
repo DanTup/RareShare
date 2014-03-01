@@ -40,7 +40,8 @@ end
 local rareShareDefaultSettings = {
 	Debug = false,
 	AnnounceExternal = false,
-	Announce = true,
+	Announce = false,
+	AnnounceTimelessIsle = true,
 	Sounds = true,
 	TomTom = true,
 	SuppressFullHealthEvermaw = true
@@ -70,6 +71,9 @@ function RareShare:ToggleAllowAnnouncingOfExternalEvents() setSetting("AnnounceE
 
 function RareShare:AllowAnnouncing() return getSetting("Announce") end
 function RareShare:ToggleAllowAnnouncing() setSetting("Announce", not getSetting("Announce")) end
+
+function RareShare:AllowAnnouncingTimelessIsle() return getSetting("AnnounceTimelessIsle") end
+function RareShare:ToggleAllowAnnouncingTimelessIsle() setSetting("AnnounceTimelessIsle", not getSetting("AnnounceTimelessIsle")) end
 
 function RareShare:AllowSounds() return getSetting("Sounds") end
 function RareShare:ToggleAllowSounds() setSetting("Sounds", not getSetting("Sounds")) end
@@ -202,7 +206,7 @@ function RareShare:Publish(rare)
 	if rare.EventType ~= "Alive" and not knownRares[rare.ID] then
 		return
 	end
-	
+
 	-- Set as Major event if it's a death, or alive but we didn't already have it
 	rare.MajorEvent = (rare.EventType == "Dead" or (rare.EventType == "Alive" and not knownRares[rare.ID]))
 
@@ -227,7 +231,11 @@ function RareShare:Publish(rare)
 	-- Only notify filtered subscribers if the event is for this zone
 	if rare.Zone == GetZoneText() then
 		for _, sub in pairs(filteredSubscribers) do
+		--assert(1==2, debug.getinfo(sub).source)
 			local status, err = pcall(function() sub(rare) end)
+			if not status then
+				assert(1==2, err)
+			end
 			if not status and RareShare:IsDebugMode() then
 				log("Subscriber error: "..err)
 			end
@@ -315,9 +323,16 @@ local function slashHandler(msg)
 	if msg == "announce" then
 		RareShare:ToggleAllowAnnouncing()
 		if RareShare:AllowAnnouncing() then
-			print("|cff9999ffRareShare:|r General Chat announcement enabled")
+			print("|cff9999ffRareShare:|r General Chat announcement for outside of Timeless Isle enabled")
 		else
-			print("|cff9999ffRareShare:|r General Chat announcement disabled")
+			print("|cff9999ffRareShare:|r General Chat announcement for outside of Timeless Isle disabled")
+		end
+	elseif msg == "announceTimeless" then
+		RareShare:ToggleAllowAnnouncingTimelessIsle()
+		if RareShare:AllowAnnouncingTimelessIsle() then
+			print("|cff9999ffRareShare:|r General Chat announcement for Timeless Isle enabled")
+		else
+			print("|cff9999ffRareShare:|r General Chat announcement for Timeless Isle disabled")
 		end
 	elseif msg == "sounds" then
 		RareShare:ToggleAllowSounds()
@@ -342,7 +357,8 @@ local function slashHandler(msg)
 		end
 	else
 		print("|cff9999ffRareShare:|r RareShare by DanTup - Commands:")
-		print("|cff9999ffRareShare:|r     /rs announce  -  Toggles announcing of rares in General Chat ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rs announce  -  Toggles announcing of rares (outside of Timeless Isle) in General Chat ("..(RareShare:AllowAnnouncing() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
+		print("|cff9999ffRareShare:|r     /rs announceTimeless  -  Toggles announcing of rares (on the Timeless Isle) in General Chat ("..(RareShare:AllowAnnouncingTimelessIsle() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 		print("|cff9999ffRareShare:|r     /rs sounds  -  Toggles DING sound when a rare is discovered ("..(RareShare:AllowSounds() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 		print("|cff9999ffRareShare:|r     /rs tomtom  -  Toggles the creation of TomTom waypoints for rares ("..(RareShare:AllowTomTom() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")
 		print("|cff9999ffRareShare:|r     /rs evermaw  -  Toggles suppressing of Evermaw events when 100% health ("..(RareShare:SuppressFullHealthEvermaw() and "|cff99ff99Enabled|r" or "|cffff9999Disabled|r")..")")

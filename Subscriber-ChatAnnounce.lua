@@ -5,7 +5,7 @@ local announcedRares = {}
 
 local function getGeneralChat(id, name, ...)
    if id and name then
-	  if strfind(name, GENERAL) then
+	  if string.find(name, GENERAL) then
 		 return id
 	  end
 	  return FindGeneralChat(...)
@@ -14,7 +14,11 @@ end
 
 local function AnnounceInChat(rare)
 	-- Never do any sort of chat announcing if disabled
-	if not RareShare:AllowAnnouncing() then return end
+	if rare.Zone == "Timeless Isle" and not RareShare:AllowAnnouncingTimelessIsle() then
+		return
+	elseif rare.Zone ~= "Timeless Isle" and not RareShare:AllowAnnouncing() then
+		return
+	end
 
 	local channelNumber = getGeneralChat(GetChannelList())
 	if channelNumber == 0 or channelNumber == nil then return end
