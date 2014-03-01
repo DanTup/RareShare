@@ -1,4 +1,9 @@
-﻿RareShare v1.5
+﻿RareShare v1.6
+===
+- Added a new option (toggled with "/rs announceTimeless") to control announcing of rares on the Timeless Isle
+- The original announce option (toggled with "/rs announce") now controls announcing of rares outside of the Timeless Isle
+
+RareShare v1.5
 ===
 - Debug text (UnitIDs like "party1", "raid2") will no longer be printed to the chat window when joining/leaving groups
 
