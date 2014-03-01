@@ -138,7 +138,33 @@ function test_subscribers_do_get_other_zone_events_if_requested()
 	assert(eventFiredCorrectly)
 end
 
-function test_announcements_enabled()
+function test_announcements_timeless_isle_enabled()
+	-- Enable announcing
+	dofile "Subscriber-ChatAnnounce.lua"
+	if not RareShare:AllowAnnouncingTimelessIsle() then RareShare:ToggleAllowAnnouncingTimelessIsle() end
+
+	-- Send non-TI rare
+	local rare = testRare
+	RareShareTests:SetZone(rare.Zone)
+	RareShare:Publish(rare)
+
+	assert(RareShareTests:GetLastChatMessage() == "[RareShare] "..rare.Name.." spotted around "..rare.X..","..rare.Y.." with "..rare.Health.."% HP!")
+end
+
+function test_announcements_timeless_isle_disabled()
+	-- Enable announcing
+	dofile "Subscriber-ChatAnnounce.lua"
+	if RareShare:AllowAnnouncingTimelessIsle() then RareShare:ToggleAllowAnnouncingTimelessIsle() end
+
+	-- Send TI rare
+	local rare = testRare
+	RareShareTests:SetZone(rare.Zone)
+	RareShare:Publish(rare)
+
+	assert(RareShareTests:GetLastChatMessage() == "")
+end
+
+function test_announcements_outside_timeless_isle_enabled()
 	-- Enable announcing
 	dofile "Subscriber-ChatAnnounce.lua"
 	if not RareShare:AllowAnnouncing() then RareShare:ToggleAllowAnnouncing() end
@@ -151,7 +177,7 @@ function test_announcements_enabled()
 	assert(RareShareTests:GetLastChatMessage() == "[RareShare] "..rare.Name.." spotted around "..rare.X..","..rare.Y.." with "..rare.Health.."% HP!", RareShareTests:GetLastChatMessage())
 end
 
-function test_announcements_disabled()
+function test_announcements_outside_timeless_isle_disabled()
 	-- Enable announcing
 	dofile "Subscriber-ChatAnnounce.lua"
 	if RareShare:AllowAnnouncing() then RareShare:ToggleAllowAnnouncing() end
