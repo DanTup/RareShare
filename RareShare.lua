@@ -327,7 +327,7 @@ local function slashHandler(msg)
 		else
 			print("|cff9999ffRareShare:|r General Chat announcement for outside of Timeless Isle disabled")
 		end
-	elseif msg == "announceTimeless" then
+	elseif msg == "announceTimeless" or msg == "announcetimeless" then
 		RareShare:ToggleAllowAnnouncingTimelessIsle()
 		if RareShare:AllowAnnouncingTimelessIsle() then
 			print("|cff9999ffRareShare:|r General Chat announcement for Timeless Isle enabled")
