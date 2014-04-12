@@ -259,7 +259,7 @@ function RareShare:SubscribeToChat(chatChannel, handler)
 	local frame = CreateFrame("MessageFrame", "RareShare"..chatChannel)
 
 	-- HACK: We need to wait some time for the default channels to be joined, otherwise we push General down from 1, and things go wonky
-	local timeTillJoinChannels = 5.0
+	local timeTillJoinChannels = 10.0
 	local function onUpdate(self, elapsed)
 		timeTillJoinChannels = timeTillJoinChannels - elapsed
 
