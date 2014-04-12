@@ -1,4 +1,9 @@
-﻿RareShare v1.6
+﻿RareShare v1.7
+===
+- Fixed an issue detecting General Chat when it was not the first chat channel
+- Increased the delay in initialising RareShare from 5 seconds to 10 seconds from login, as some people were still seeing it joined before General (pushing General chat down the list)
+
+RareShare v1.6
 ===
 - Added a new option (toggled with "/rs announceTimeless") to control announcing of rares on the Timeless Isle
 - The original announce option (toggled with "/rs announce") now controls announcing of rares outside of the Timeless Isle
