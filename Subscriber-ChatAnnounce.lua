@@ -8,7 +8,7 @@ local function getGeneralChat(id, name, ...)
 	  if string.find(name, GENERAL) then
 		 return id
 	  end
-	  return FindGeneralChat(...)
+	  return getGeneralChat(...)
    end
 end
 
