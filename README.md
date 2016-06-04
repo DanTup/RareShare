@@ -1,4 +1,6 @@
-﻿RareShare Addon for World of Warcraft
+> NOTE: This software is not being actively developed or maintained.
+
+RareShare Addon for World of Warcraft
 =========
 
 RareShare receives and shares information on the locations and current HP of rare mobs both on The Timeless Isle and across the rest of Azeroth and Outland.
